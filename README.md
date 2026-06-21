@@ -5,6 +5,8 @@
 
 Home Assistant Integration für schweizer Stromtarife im SEC-Energy JSON-Format. Unterstützt dynamische Tarifauswahl, Echtzeit-Preise und 24h-Vorhersage.
 
+![Dashboard Screenshot](screenshot.png)
+
 ## Features
 
 - 🔌 **Mehrere Stromversorger** - Unterstützt alle SEC-Energy-kompatiblen APIs
