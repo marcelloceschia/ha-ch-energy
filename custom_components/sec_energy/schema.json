@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sec-energy.ch/schema/tariff-data",
+  "title": "SEC Energy Tariff Data Schema",
+  "description": "JSON Schema for validating Swiss electricity tariff data in SEC-Energy format",
+  "type": "object",
+  "required": ["dsoName", "dsoNumber", "tariffs"],
+  "properties": {
+    "dsoName": {
+      "type": "string",
+      "description": "Name of the distribution system operator"
+    },
+    "dsoNumber": {
+      "type": "integer",
+      "description": "Unique identifier for the DSO"
+    },
+    "tariffs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/tariff"
+      }
+    }
+  },
+  "definitions": {
+    "tariff": {
+      "type": "object",
+      "required": ["tariffName", "tariffType", "tariffForm", "prices"],
+      "properties": {
+        "customerVoltageLevel": {
+          "type": "integer",
+          "description": "Voltage level of the customer connection"
+        },
+        "tariffName": {
+          "type": "string",
+          "description": "Name of the tariff"
+        },
+        "tariffType": {
+          "type": "string",
+          "enum": ["grid", "electricity", "metering", "other"],
+          "description": "Type of tariff"
+        },
+        "tariffForm": {
+          "type": "string",
+          "enum": ["multilevel", "constant", "other"],
+          "description": "Form of tariff pricing"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date of the tariff validity"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date",
+          "description": "End date of the tariff validity"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "customerType": {
+          "type": "string",
+          "description": "Type of customer (e.g., Endkunde)"
+        },
+        "prices": {
+          "type": "object",
+          "required": ["base", "energy"],
+          "properties": {
+            "base": {
+              "type": "object",
+              "required": ["price", "priceUnit"],
+              "properties": {
+                "price": {
+                  "type": "number"
+                },
+                "priceUnit": {
+                  "type": "string"
+                }
+              }
+            },
+            "energy": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/priceTier"
+              }
+            },
+            "power": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/priceTier"
+              }
+            },
+            "reactivePower": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/priceTier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "priceTier": {
+      "type": "object",
+      "required": ["months", "weekdays", "from", "to", "price", "priceUnit"],
+      "properties": {
+        "months": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+          }
+        },
+        "weekdays": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+          }
+        },
+        "from": {
+          "type": "string",
+          "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$",
+          "description": "Start time in HH:MM format"
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$",
+          "description": "End time in HH:MM format"
+        },
+        "price": {
+          "type": "number",
+          "minimum": 0
+        },
+        "priceUnit": {
+          "type": "string",
+          "enum": ["CHF/kWh", "CHF/kW/M", "CHF/kVarh", "CHF/M"]
+        }
+      }
+    }
+  }
+}

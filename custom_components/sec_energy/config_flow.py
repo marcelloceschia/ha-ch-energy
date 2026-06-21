@@ -1,11 +1,96 @@
 import logging
 import voluptuous as vol
 import aiohttp
+import json
 from homeassistant import config_entries
 from homeassistant.core import callback
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
+
+# SEC Energy JSON Schema (inline für Home Assistant)
+SEC_ENERGY_SCHEMA = {
+    "required": ["dsoName", "dsoNumber", "tariffs"],
+    "properties": {
+        "dsoName": {"type": "string"},
+        "dsoNumber": {"type": "integer"},
+        "tariffs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "required": ["tariffName", "tariffType", "tariffForm", "prices"],
+                "properties": {
+                    "tariffName": {"type": "string"},
+                    "tariffType": {"type": "string", "enum": ["grid", "electricity", "metering", "other"]},
+                    "tariffForm": {"type": "string", "enum": ["multilevel", "constant", "other"]},
+                    "prices": {
+                        "required": ["base", "energy"],
+                        "properties": {
+                            "base": {
+                                "required": ["price", "priceUnit"],
+                                "properties": {
+                                    "price": {"type": "number"},
+                                    "priceUnit": {"type": "string"}
+                                }
+                            },
+                            "energy": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["months", "weekdays", "from", "to", "price", "priceUnit"],
+                                    "properties": {
+                                        "months": {"type": "array", "items": {"type": "string"}},
+                                        "weekdays": {"type": "array", "items": {"type": "string"}},
+                                        "from": {"type": "string", "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$"},
+                                        "to": {"type": "string", "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$"},
+                                        "price": {"type": "number", "minimum": 0},
+                                        "priceUnit": {"type": "string"}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+def validate_schema(data):
+    """Validiere SEC-Energy JSON Schema"""
+    errors = []
+    
+    # Root level
+    for field in SEC_ENERGY_SCHEMA["required"]:
+        if field not in data:
+            errors.append(f"Fehlendes Pflichtfeld: {field}")
+    
+    if not isinstance(data.get("dsoName"), str):
+        errors.append("dsoName muss ein String sein")
+    
+    if not isinstance(data.get("dsoNumber"), int):
+        errors.append("dsoNumber muss eine Ganzzahl sein")
+    
+    tariffs = data.get("tariffs", [])
+    if not isinstance(tariffs, list) or len(tariffs) == 0:
+        errors.append("tariffs muss ein Array mit mindestens 1 Element sein")
+    else:
+        for i, tariff in enumerate(tariffs):
+            for field in ["tariffName", "tariffType", "tariffForm", "prices"]:
+                if field not in tariff:
+                    errors.append(f"Tarif {i}: Fehlendes Feld '{field}'")
+            
+            prices = tariff.get("prices", {})
+            if not isinstance(prices, dict):
+                errors.append(f"Tarif {i}: prices muss ein Objekt sein")
+            else:
+                if "base" not in prices:
+                    errors.append(f"Tarif {i}: prices.base fehlt")
+                if "energy" not in prices:
+                    errors.append(f"Tarif {i}: prices.energy fehlt")
+                elif not isinstance(prices.get("energy"), list):
+                    errors.append(f"Tarif {i}: prices.energy muss ein Array sein")
+    
+    return errors
 
 # Vordefinierte DSOs (Stromversorger) mit ihren API-URLs
 # Generiert aus SEC-Energy API (Stand: 2026-06-21, 93 Anbieter)
@@ -176,7 +261,11 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
                             text = await response.text()
                             data = json.loads(text)
-                            if "tariffs" not in data:
+                            
+                            # Schema-Validierung
+                            schema_errors = validate_schema(data)
+                            if schema_errors:
+                                _LOGGER.error("Schema-Validierung fehlgeschlagen: %s", schema_errors)
                                 errors["base"] = "invalid_format"
                             else:
                                 self.context["dso_name"] = data.get("dsoName", "Custom DSO")
