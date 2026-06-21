@@ -1,0 +1,37 @@
+{
+  "title": "SEC Energy Swiss Tariffs",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Select Energy Provider",
+        "description": "Choose your electricity distribution system operator.",
+        "data": {
+          "dso": "Energy Provider"
+        }
+      },
+      "custom_url": {
+        "title": "Custom API URL",
+        "description": "Enter the URL to your provider's tariff data.",
+        "data": {
+          "custom_url": "API URL"
+        }
+      },
+      "tariff": {
+        "title": "Select Tariff",
+        "description": "Select your electricity tariff.",
+        "data": {
+          "name": "Name",
+          "tariff": "Tariff",
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_format": "Invalid data format",
+      "no_tariffs": "No tariffs found",
+      "invalid_url": "Invalid URL",
+      "required": "Required"
+    }
+  }
+}

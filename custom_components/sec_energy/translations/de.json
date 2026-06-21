@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SEC Energy - Stromversorger wählen",
+        "description": "Wähle deinen Stromversorger (Verteilnetzbetreiber) aus der Liste.",
+        "data": {
+          "dso": "Stromversorger"
+        }
+      },
+      "custom_url": {
+        "title": "Eigene API-URL",
+        "description": "Gib die URL zu den Tarifdaten im SEC-Energy-JSON-Format ein.",
+        "data": {
+          "custom_url": "API-URL"
+        }
+      },
+      "tariff": {
+        "title": "Tarif auswählen",
+        "description": "Wähle deinen Stromtarif bei {dso}.",
+        "data": {
+          "name": "Name der Integration",
+          "tariff": "Tarif",
+          "scan_interval": "Aktualisierungsintervall (Sekunden)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen. Bitte URL prüfen.",
+      "invalid_format": "Ungültiges Format. SEC-Energy-JSON erwartet.",
+      "no_tariffs": "Keine Tarife gefunden.",
+      "invalid_url": "Ungültige URL. Muss mit http:// oder https:// beginnen.",
+      "required": "Dieses Feld ist erforderlich."
+    },
+    "abort": {
+      "already_configured": "Dieser Stromversorger ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "SEC Energy Einstellungen",
+        "data": {
+          "tariff": "Tarif",
+          "scan_interval": "Aktualisierungsintervall (Sekunden)"
+        }
+      }
+    }
+  }
+}

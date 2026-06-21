@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SEC Energy - Select Energy Provider",
+        "description": "Select your electricity distribution system operator from the list.",
+        "data": {
+          "dso": "Energy Provider"
+        }
+      },
+      "custom_url": {
+        "title": "Custom API URL",
+        "description": "Enter the URL to the tariff data in SEC-Energy JSON format.",
+        "data": {
+          "custom_url": "API URL"
+        }
+      },
+      "tariff": {
+        "title": "Select Tariff",
+        "description": "Select your electricity tariff from {dso}.",
+        "data": {
+          "name": "Integration Name",
+          "tariff": "Tariff",
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect. Please check the URL.",
+      "invalid_format": "Invalid format. SEC-Energy JSON expected.",
+      "no_tariffs": "No tariffs found.",
+      "invalid_url": "Invalid URL. Must start with http:// or https://.",
+      "required": "This field is required."
+    },
+    "abort": {
+      "already_configured": "This energy provider is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "SEC Energy Settings",
+        "data": {
+          "tariff": "Tariff",
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    }
+  }
+}
