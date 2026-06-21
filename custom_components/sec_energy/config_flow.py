@@ -1,8 +1,11 @@
+import logging
 import voluptuous as vol
 import aiohttp
 from homeassistant import config_entries
 from homeassistant.core import callback
 from .const import DOMAIN
+
+_LOGGER = logging.getLogger(__name__)
 
 # Vordefinierte DSOs (Stromversorger) mit ihren API-URLs
 # Generiert aus SEC-Energy API (Stand: 2026-06-21, 93 Anbieter)
@@ -145,16 +148,18 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     "dso_url": dso_url,
                     "dso_name": dso_name,
                     "tariff": user_input["tariff"],
-                    "scan_interval": user_input.get("scan_interval", 300),
+                    "scan_interval": user_input.get("scan_interval", 86400),
                 }
             )
         
         # Lade Tarife von der API
         tariff_choices = {}
         try:
+            import json
             async with aiohttp.ClientSession() as session:
                 async with session.get(dso_url, timeout=aiohttp.ClientTimeout(total=30)) as response:
-                    data = await response.json()
+                    text = await response.text()
+                    data = json.loads(text)
                     
             for t in data.get("tariffs", []):
                 name = t.get("tariffName", "Unknown")
@@ -164,7 +169,8 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 label = f"{name} ({t_type}, {t_form})"
                 tariff_choices[name] = label
                 
-        except Exception:
+        except Exception as err:
+            _LOGGER.error("Tarif-Ladefehler: %s", err)
             errors["base"] = "cannot_connect"
             # Fallback: leere Liste
             tariff_choices = {}
@@ -177,7 +183,7 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema({
                 vol.Required("name", default=dso_name): str,
                 vol.Required("tariff", default=list(tariff_choices.keys())[0] if tariff_choices else ""): vol.In(tariff_choices),
-                vol.Optional("scan_interval", default=300): vol.All(vol.Coerce(int), vol.Range(min=60, max=3600)),
+                vol.Optional("scan_interval", default=86400): vol.All(vol.Coerce(int), vol.Range(min=60, max=604800)),
             }),
             errors=errors,
             description_placeholders={

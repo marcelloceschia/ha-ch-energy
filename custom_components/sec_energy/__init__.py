@@ -37,9 +37,11 @@ class SECEnergyCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         try:
+            import json
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.url, timeout=aiohttp.ClientTimeout(total=30)) as response:
-                    data = await response.json()
+                    text = await response.text()
+                    data = json.loads(text)
                     
             # Finde den gewählten Tarif
             tariff = None
