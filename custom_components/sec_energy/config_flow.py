@@ -109,16 +109,25 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 try:
                     # Teste die URL
-                    async with aiohttp.ClientSession() as session:
+                    import json
+                    async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
                         async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
-                            data = await response.json()
+                            text = await response.text()
+                            data = json.loads(text)
                             if "tariffs" not in data:
                                 errors["base"] = "invalid_format"
                             else:
                                 self.context["dso_name"] = data.get("dsoName", "Custom DSO")
                                 self.context["dso_url"] = url
                                 return await self.async_step_tariff()
-                except Exception:
+                except json.JSONDecodeError:
+                    _LOGGER.error("Ungültiges JSON von Custom URL")
+                    errors["base"] = "invalid_format"
+                except aiohttp.ClientError as err:
+                    _LOGGER.error("HTTP Fehler bei Custom URL: %s", err)
+                    errors["base"] = "cannot_connect"
+                except Exception as err:
+                    _LOGGER.error("Unerwarteter Fehler bei Custom URL: %s", err, exc_info=True)
                     errors["base"] = "cannot_connect"
         
         return self.async_show_form(
