@@ -15,6 +15,71 @@ WEEKDAY_MAP = {0: "Mo", 1: "Tu", 2: "We", 3: "Th", 4: "Fr", 5: "Sa", 6: "Su"}
 MONTH_MAP = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
              7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"}
 
+# Price category thresholds (relative to tariff structure)
+PRICE_CATEGORIES = {
+    "cheap": {"color": "#4CAF50", "label": "Günstig"},      # Green
+    "normal": {"color": "#FFC107", "label": "Normal"},      # Yellow
+    "expensive": {"color": "#FF9800", "label": "Hochtarif"}, # Orange
+    "peak": {"color": "#F44336", "label": "Spitzenpreis"},   # Red
+}
+
+
+def get_price_category(price, all_prices):
+    """Determine price category based on relative position in tariff prices.
+    
+    Args:
+        price: Current price to categorize
+        all_prices: List of all possible prices in the tariff
+    
+    Returns:
+        dict with category, color, label, percentile
+    """
+    if not all_prices or len(all_prices) < 2:
+        return {"category": "normal", **PRICE_CATEGORIES["normal"], "percentile": 50}
+    
+    sorted_prices = sorted(all_prices)
+    min_price = sorted_prices[0]
+    max_price = sorted_prices[-1]
+    
+    # Calculate percentile (0-100)
+    if max_price == min_price:
+        percentile = 50
+    else:
+        percentile = ((price - min_price) / (max_price - min_price)) * 100
+    
+    # Determine category based on percentile
+    if percentile < 25:
+        cat = "cheap"
+    elif percentile < 50:
+        cat = "normal"
+    elif percentile < 75:
+        cat = "expensive"
+    else:
+        cat = "peak"
+    
+    return {
+        "category": cat,
+        **PRICE_CATEGORIES[cat],
+        "percentile": round(percentile, 1)
+    }
+
+
+def get_all_prices(tariff):
+    """Extract all unique energy prices from a tariff for comparison.
+    
+    Args:
+        tariff: The tariff dictionary from API
+    
+    Returns:
+        List of unique prices (floats)
+    """
+    prices = set()
+    price_list = tariff.get("prices", {}).get("energy", [])
+    for item in price_list:
+        if "price" in item:
+            prices.add(float(item["price"]))
+    return sorted(list(prices))
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     coordinator = hass.data[DOMAIN][entry.entry_id]
@@ -131,6 +196,9 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
             _LOGGER.warning("Kein Tarif für Forecast vorhanden")
             return {}
         
+        # Get all possible prices for category calculation
+        all_prices = get_all_prices(tariff)
+        
         now = datetime.now()
         forecast = []
         for i in range(25):
@@ -139,10 +207,15 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
             if future_hour < now.replace(minute=0, second=0, microsecond=0):
                 future_hour += timedelta(hours=1)
             price = get_current_price(tariff, future_hour)
+            category = get_price_category(price, all_prices)
             forecast.append({
                 "hour": future_hour.isoformat(),
                 "price": price,
-                "price_unit": "CHF/kWh"
+                "price_unit": "CHF/kWh",
+                "category": category["category"],
+                "category_label": category["label"],
+                "color": category["color"],
+                "percentile": category["percentile"]
             })
         
         _LOGGER.debug("Forecast generiert: %d Einträge", len(forecast))
@@ -237,6 +310,9 @@ class SECEnergyForecastAlias(CoordinatorEntity, SensorEntity):
         if not tariff:
             return {}
         
+        # Get all possible prices for category calculation
+        all_prices = get_all_prices(tariff)
+        
         now = datetime.now()
         forecast = []
         for i in range(25):
@@ -244,10 +320,16 @@ class SECEnergyForecastAlias(CoordinatorEntity, SensorEntity):
             future_hour = future.replace(minute=0, second=0, microsecond=0)
             if future_hour < now.replace(minute=0, second=0, microsecond=0):
                 future_hour += timedelta(hours=1)
+            price = get_current_price(tariff, future_hour)
+            category = get_price_category(price, all_prices)
             forecast.append({
                 "hour": future_hour.isoformat(),
-                "price": get_current_price(tariff, future_hour),
-                "price_unit": "CHF/kWh"
+                "price": price,
+                "price_unit": "CHF/kWh",
+                "category": category["category"],
+                "category_label": category["label"],
+                "color": category["color"],
+                "percentile": category["percentile"]
             })
         return {"forecast": forecast}
 
