@@ -19,10 +19,16 @@ series:
       const forecast = entity.attributes.forecast;
       if (!forecast) return [];
       return forecast.map(item => {
+        const colorMap = {
+          'cheap': '#4CAF50',
+          'normal': '#FFC107',
+          'expensive': '#FF9800',
+          'peak': '#F44336'
+        };
         return {
           x: new Date(item.hour).getTime(),
           y: item.price,
-          fillColor: item.color
+          fillColor: colorMap[item.category] || '#9E9E9E'
         };
       });
     float_precision: 4

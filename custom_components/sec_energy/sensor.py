@@ -17,10 +17,10 @@ MONTH_MAP = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
 
 # Price category thresholds (relative to tariff structure)
 PRICE_CATEGORIES = {
-    "cheap": {"color": "#4CAF50", "label": "Günstig"},      # Green
-    "normal": {"color": "#FFC107", "label": "Normal"},      # Yellow
-    "expensive": {"color": "#FF9800", "label": "Hochtarif"}, # Orange
-    "peak": {"color": "#F44336", "label": "Spitzenpreis"},   # Red
+    "cheap": {"label": "Günstig"},
+    "normal": {"label": "Normal"},
+    "expensive": {"label": "Hochtarif"},
+    "peak": {"label": "Spitzenpreis"},
 }
 
 
@@ -59,7 +59,7 @@ def get_price_category(price, all_prices):
     
     return {
         "category": cat,
-        **PRICE_CATEGORIES[cat],
+        "label": PRICE_CATEGORIES[cat]["label"],
         "percentile": round(percentile, 1)
     }
 
@@ -214,7 +214,6 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
                 "price_unit": "CHF/kWh",
                 "category": category["category"],
                 "category_label": category["label"],
-                "color": category["color"],
                 "percentile": category["percentile"]
             })
         
@@ -328,7 +327,6 @@ class SECEnergyForecastAlias(CoordinatorEntity, SensorEntity):
                 "price_unit": "CHF/kWh",
                 "category": category["category"],
                 "category_label": category["label"],
-                "color": category["color"],
                 "percentile": category["percentile"]
             })
         return {"forecast": forecast}
