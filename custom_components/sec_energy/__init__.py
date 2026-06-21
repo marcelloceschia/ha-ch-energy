@@ -1,11 +1,13 @@
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from datetime import timedelta
 import aiohttp
 import logging
+import json
 
 from .const import DOMAIN, DEFAULT_SCAN_INTERVAL
+from .config_flow import validate_schema
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -14,6 +16,63 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_config_entry_first_refresh()
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
     await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
+    
+    # Register services
+    async def handle_validate_url(call: ServiceCall):
+        """Handle validate_url service call."""
+        url = call.data.get("url")
+        if not url:
+            return {"success": False, "error": "URL parameter required"}
+        
+        _LOGGER.info("Validating URL: %s", url)
+        
+        try:
+            async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
+                async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+                    text = await response.text()
+                    data = json.loads(text)
+                    
+                    # Schema validation
+                    schema_errors = validate_schema(data)
+                    if schema_errors:
+                        return {
+                            "success": False,
+                            "error": "Schema validation failed",
+                            "schema_errors": schema_errors,
+                            "dso_name": data.get("dsoName", "Unknown"),
+                            "tariff_count": len(data.get("tariffs", [])),
+                        }
+                    
+                    # Extract tariff info
+                    tariffs = []
+                    for t in data.get("tariffs", []):
+                        tariffs.append({
+                            "name": t.get("tariffName"),
+                            "type": t.get("tariffType"),
+                            "form": t.get("tariffForm"),
+                        })
+                    
+                    return {
+                        "success": True,
+                        "dso_name": data.get("dsoName"),
+                        "dso_number": data.get("dsoNumber"),
+                        "tariff_count": len(tariffs),
+                        "tariffs": tariffs,
+                    }
+                    
+        except json.JSONDecodeError as e:
+            _LOGGER.error("Invalid JSON from URL: %s", e)
+            return {"success": False, "error": f"Invalid JSON: {str(e)}"}
+        except aiohttp.ClientError as e:
+            _LOGGER.error("HTTP error for URL: %s", e)
+            return {"success": False, "error": f"HTTP error: {str(e)}"}
+        except Exception as e:
+            _LOGGER.error("Unexpected error validating URL: %s", e, exc_info=True)
+            return {"success": False, "error": f"Unexpected error: {str(e)}"}
+    
+    hass.services.async_register(DOMAIN, "validate_url", handle_validate_url)
+    _LOGGER.info("Registered service: %s.validate_url", DOMAIN)
+    
     return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

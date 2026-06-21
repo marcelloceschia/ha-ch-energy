@@ -1,0 +1,11 @@
+validate_url:
+  name: Validate SEC Energy URL
+  description: Validates a SEC Energy compatible tariff URL and returns schema validation results.
+  fields:
+    url:
+      name: URL
+      description: The URL to the SEC Energy compatible JSON file
+      required: true
+      selector:
+        text:
+          type: url
