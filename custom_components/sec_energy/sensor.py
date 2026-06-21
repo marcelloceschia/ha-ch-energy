@@ -288,7 +288,11 @@ class SECEnergyBasePriceAlias(CoordinatorEntity, SensorEntity):
 
 
 class SECEnergyIsHighTariffAlias(CoordinatorEntity, SensorEntity):
-    """Alias sensor: sensor.strompreis_ist_hochtarif"""
+    """Alias sensor: sensor.strompreis_ist_hochtarif
+    
+    Dynamically determines if current price is the high tariff rate
+    by comparing current price against all prices in the tariff.
+    """
     _sensor_type = "alias_is_high_tariff"
     _sensor_name = "Strompreis Ist Hochtarif"
 
@@ -305,15 +309,32 @@ class SECEnergyIsHighTariffAlias(CoordinatorEntity, SensorEntity):
 
     @property
     def native_value(self):
-        now = datetime.now()
-        weekday = now.weekday()
-        hour = now.hour
+        tariff = self.coordinator.data.get("tariff")
+        if not tariff:
+            return None
         
-        # Mo-Fr 7-20 Uhr = Hochtarif
-        # Sa 7-13 Uhr = Hochtarif
-        if weekday < 5 and 7 <= hour < 20:
-            return "true"
-        elif weekday == 5 and 7 <= hour < 13:
+        now = datetime.now()
+        current_price = get_current_price(tariff, now)
+        
+        # Collect all unique prices from the tariff
+        prices = tariff.get("prices", {})
+        energy_tiers = prices.get("energy", [])
+        
+        if not energy_tiers:
+            return "false"
+        
+        # Get all unique prices
+        all_prices = set()
+        for tier in energy_tiers:
+            all_prices.add(tier.get("price", 0))
+        
+        if not all_prices:
+            return "false"
+        
+        max_price = max(all_prices)
+        
+        # If current price equals max price, it's high tariff
+        if current_price >= max_price:
             return "true"
         return "false"
 
