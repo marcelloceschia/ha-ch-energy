@@ -129,13 +129,56 @@ type: custom:apexcharts-card
 header:
   show: true
   title: 📊 Strompreis 24h Vorhersage
+  show_states: true
+  colorize_states: true
 graph_span: 24h
+span:
+  start: minute
+  offset: "-30m"
+now:
+  show: true
+  label: Jetzt
 series:
-  - entity: sensor.strompreis_vorhersage
+  - entity: sensor.strompreis_forecast
+    name: Strompreis
     type: column
     data_generator: |
       const forecast = entity.attributes.forecast;
-      return forecast.map(item => [new Date(item.hour).getTime(), item.price]);
+      const colorMap = {
+        'cheap': '#4CAF50',
+        'normal': '#FFC107',
+        'expensive': '#FF9800',
+        'peak': '#F44336'
+      };
+      if (!forecast) return [];
+      return forecast.map(item => {
+        return {
+          x: new Date(item.hour).getTime(),
+          y: item.price,
+          fillColor: colorMap[item.category] || '#9E9E9E'
+        };
+      });
+    float_precision: 4
+yaxis:
+  - min: 0.09
+    max: 0.13
+    decimals: 5
+apex_config:
+  chart:
+    toolbar:
+      show: false
+    animations:
+      enabled: true
+  legend:
+    show: false
+  tooltip:
+    "y":
+      formatter: |
+        function(val, { seriesIndex, dataPointIndex, w }) {
+          const forecast = w.config.series[seriesIndex].data[dataPointIndex];
+          const item = entity.attributes.forecast[dataPointIndex];
+          return val + ' CHF/kWh (' + item.category_label + ')';
+        }
 ```
 
 ### Übersichtskarte
