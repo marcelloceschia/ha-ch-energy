@@ -5,7 +5,38 @@ from homeassistant.core import callback
 from .const import DOMAIN
 
 # Vordefinierte DSOs (Stromversorger) mit ihren API-URLs
+# Generiert aus SEC-Energy API (Stand: 2026-06-21, 93 Anbieter)
 PREDEFINED_DSOS = {
+    "AEW": "https://aew.ch/sites/default/files/20260129_tariffs.json",
+    "Arbon Energie AG": "https://sec-energy.ch/tarifdaten/arbon/Tarifdaten_2026_Arbon_Energie_AG.json",
+    "ACA Airolo": "https://www.comuneairolo.ch/azienda-elettrica/pdfDownloadHome/air_elettrica_1_9.json",
+    "SH POWER": "https://www.shpower.ch/fileadmin/stromtarife/shpower-stromtarife.json",
+    "Commune de Paudex": "https://www.paudex.ch/static/tarif-electricite.json",
+    "Comune di Stabio, Elettrica": "https://amstabio.ch/fileadmin/user_upload/tariffe_2026.json",
+    "EGH Elektro-Genossenschaft Hünenberg": "https://egh.ch/wp-content/uploads/2025/08/Tarife_2026_20250811_tariffs.json",
+    "Technische Betriebe Birmenstorf": "https://energieverbrauch.ch/download/Tarife/Technische_Betriebe_Birmenstorf_2026.json",
+    "Elektrizitätswerk Muhen": "https://www.muhen.ch/public/upload/assets/3522/Tarife_Elektrizit%C3%A4tswerk-Muhen_2026.json",
+    "Elektrizitätsversorgung Villigen (EVV)": "https://25304444.fs1.hubspotusercontent-eu1.net/hubfs/25304444/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250827_evvilligen_strompreise_2026.json",
+    "Elektrizitäts- und Wasserwerk Windisch": "https://www.regionalwerke.ch/fileadmin/Strompreise_ElCom/Windisch_tariffs_2026.json",
+    "Elektrizitätsversorgung Zeihen (EVZ)": "https://energieverbrauch.ch/download/Tarife/Tarife_Elektrizit%C3%A4tsversorgung-Zeihen_2026.json",
+    "Elektra Genossenschaft Arni-Islisberg": "https://egai.ch/index_htm_files/Tarife_Elektra_Arni-Islisberg_2026.json",
+    "Elektra Horn AG": "https://sec-energy.ch/tarifdaten/horn/Tarifdaten_2026_Elektra_Horn_AG.json",
+    "Elektra-Korporation Wolfhalden EKW": "https://ekw.ch/wp-content/uploads/2025/08/20250831_EKw_-Tarife_-2026.json",
+    "Elektra Mettauertal und Umgebung": "https://www.emu-hottwil.ch/_docn/166696/20250827_tariffs.json",
+    "Elektra Remetschwil": "https://elektra-remetschwil.ch/view/data/9595/Tarife_Elektra_Remetschwil_2026.json",
+    "Elektrizitätsgenossenschaft Mellingen (EGM)": "https://egm-strom.ch/wp-content/uploads/2025/08/Tarife_ElektrizitaetsgenossenschaftMuelligen_2026.json",
+    "Elektrizitäts-Genossenschaft Merenschwand": "https://elektra-merenschwand.ch/wp-content/uploads/2025/08/Tarife_Elektrizit%C3%A4ts-Genossenschaft_Merenschwand_2026.json",
+    "Elektra Aristau": "https://www.elektra-aristau.ch/media/tarifs_json/Tarife_ElektraAristau_2026.json",
+    "Elektra Beinwil": "https://www.elektra-beinwil.ch/sites/default/files/Tarife_Elektra_Beinwil_2026.json",
+    "Elektrizitätswerk Hefenhofen": "https://www.hefenhofen.ch/fileadmin/hefenhofen/EBS_Tarifblatt_2026_final_maschinenlesbar_Form.json",
+    "Elektra Hermetschwil": "https://www.elektra-hermetschwil.ch/sites/default/files/Tarife_Elektra_Hermetschwil-Staffeln_2026.json",
+    "Elektrizitätsgenossenschaft Jonen": "https://downloads.elektra-jonen.ch/Tarife_Elektrizitaetsgenossenschaft-Jonen_2026.json",
+    "Elektrizitätsgenossenschaft Mühlau": "https://www.elektra-muehlau.ch/assets/downloads/strom/2026/tarife_elektrizitaetsgenossenschaft-muehlau-_vnb__2026.json",
+    "Elektrizitätsgenossenschaft Otelfingen (EGO)": "https://www.eg-otelfingen.ch/downloads/EGO_20250822_tarife.json",
+    "Elektrizitätsgenossenschaft Rümikon": "https://egruemikon.ch/contentpics/File/Tarife_Elektrizitaetsgenossenschaft_Ruemikon_2026.json",
+    "Elektra Oberrohrdorf (EOR)": "https://www.eor.ch/wp-content/uploads/2025/08/Tarife_Elektra_Oberrohrdorf_VNB_2026.json",
+    "IB Wohlen AG": "https://www.ibw.ag/mm/Tarife_IB_Wohlen_AG_2026.json",
+    "Stadtwerke Schaffhausen (SGSW)": "https://www.sgsw.ch/home/strom/tarife/_jcr_content/Par/sgsw_accordion_list_/AccordionListPar/sgsw_accordion_12353_1221402959/AccordionPar/sgsw_downloadlist/DownloadListPar/sgsw_download.ocFile/2026%20Strompreise%20maschinenlesbar.json",
     "Stadtwerke Wetzikon": "https://sec-energy.ch/tarifdaten/wetzikon/Tarifdaten_2026_Stadtwerke_Wetzikon.json",
     "Custom / Other": "custom",
 }

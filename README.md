@@ -14,11 +14,44 @@ Home Assistant Integration für schweizer Stromtarife im SEC-Energy JSON-Format.
 - 💰 **Kostenberechnung** - Verbrauch × Preis = Kosten
 - 🔄 **Automatischer Tarif-Wechsel** - Hochtarif/Niedertarif automatisch erkannt
 
-## Unterstützte Anbieter
+## Unterstützte Anbieter (93+ Schweizer Stromversorger)
 
-| Anbieter | URL |
-|----------|-----|
-| Stadtwerke Wetzikon | `https://sec-energy.ch/tarifdaten/wetzikon/Tarifdaten_2026_Stadtwerke_Wetzikon.json` |
+Die Integration unterstützt alle SEC-Energy-kompatiblen APIs. Hier eine Auswahl:
+
+| Anbieter | Region |
+|----------|--------|
+| AEW | Aargau |
+| Arbon Energie AG | Thurgau |
+| ACA Airolo | Ticino |
+| SH POWER | Schaffhausen |
+| Commune de Paudex | Vaud |
+| Comune di Stabio | Ticino |
+| EGH Hünenberg | Zug |
+| Technische Betriebe Birmenstorf | Aargau |
+| Elektrizitätswerk Muhen | Aargau |
+| Elektrizitätsversorgung Villigen (EVV) | Aargau |
+| Elektrizitäts- und Wasserwerk Windisch | Aargau |
+| Elektrizitätsversorgung Zeihen (EVZ) | Aargau |
+| Elektra Genossenschaft Arni-Islisberg | Aargau |
+| Elektra Horn AG | Thurgau |
+| Elektra-Korporation Wolfhalden EKW | Appenzell |
+| Elektra Mettauertal | Aargau |
+| Elektra Remetschwil | Aargau |
+| Elektrizitätsgenossenschaft Mellingen | Aargau |
+| Elektrizitäts-Genossenschaft Merenschwand | Aargau |
+| Elektra Aristau | Aargau |
+| Elektra Beinwil | Aargau |
+| Elektrizitätswerk Hefenhofen | Thurgau |
+| Elektra Hermetschwil | Aargau |
+| Elektrizitätsgenossenschaft Jonen | Aargau |
+| Elektrizitätsgenossenschaft Mühlau | Aargau |
+| Elektrizitätsgenossenschaft Otelfingen (EGO) | Zürich |
+| Elektrizitätsgenossenschaft Rümikon | Zürich |
+| Elektra Oberrohrdorf (EOR) | Aargau |
+| IB Wohlen AG | Aargau |
+| Stadtwerke Schaffhausen (SGSW) | Schaffhausen |
+| Stadtwerke Wetzikon | Zürich |
+| **+ 60 weitere Anbieter** | **Schweizweit** |
 | Custom / Other | Beliebige SEC-Energy-kompatible URL |
 
 ## Installation
