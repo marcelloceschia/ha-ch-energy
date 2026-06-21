@@ -7,7 +7,7 @@ header:
 graph_span: 24h
 span:
   start: minute
-  offset: +0m
+  offset: "-30m"
 now:
   show: true
   label: Jetzt
@@ -17,14 +17,14 @@ series:
     type: column
     data_generator: |
       const forecast = entity.attributes.forecast;
+      const colorMap = {
+        'cheap': '#4CAF50',
+        'normal': '#FFC107',
+        'expensive': '#FF9800',
+        'peak': '#F44336'
+      };
       if (!forecast) return [];
       return forecast.map(item => {
-        const colorMap = {
-          'cheap': '#4CAF50',
-          'normal': '#FFC107',
-          'expensive': '#FF9800',
-          'peak': '#F44336'
-        };
         return {
           x: new Date(item.hour).getTime(),
           y: item.price,
@@ -32,16 +32,11 @@ series:
         };
       });
     float_precision: 4
-    show:
-      legend_value: false
 yaxis:
-  - min: ~0.09
-    max: ~0.16
-    decimals: 4
+  - min: 0.09
+    max: 0.13
+    decimals: 5
 apex_config:
-  yaxis:
-    title:
-      text: CHF/kWh
   chart:
     toolbar:
       show: false
@@ -50,7 +45,7 @@ apex_config:
   legend:
     show: false
   tooltip:
-    y:
+    "y":
       formatter: |
         function(val, { seriesIndex, dataPointIndex, w }) {
           const forecast = w.config.series[seriesIndex].data[dataPointIndex];
