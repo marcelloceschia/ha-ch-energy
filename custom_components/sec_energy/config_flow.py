@@ -139,7 +139,10 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         dso_url = self.context.get("dso_url")
         dso_name = self.context.get("dso_name", "SEC Energy")
         
+        _LOGGER.debug("async_step_tariff aufgerufen: dso_url=%s, dso_name=%s", dso_url, dso_name)
+        
         if user_input is not None:
+            _LOGGER.debug("Tarif gewählt: %s", user_input)
             # Tarif wurde gewählt, erstelle den Eintrag
             return self.async_create_entry(
                 title=user_input.get("name", dso_name),
@@ -154,12 +157,19 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         
         # Lade Tarife von der API
         tariff_choices = {}
+        text = None
         try:
             import json
+            _LOGGER.debug("Lade Tarife von URL: %s", dso_url)
             async with aiohttp.ClientSession() as session:
                 async with session.get(dso_url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+                    _LOGGER.debug("HTTP Status: %s, Content-Type: %s", response.status, response.headers.get('content-type'))
                     text = await response.text()
+                    _LOGGER.debug("Response Länge: %d chars", len(text))
+                    _LOGGER.debug("Response Preview (first 500 chars): %s", text[:500])
                     data = json.loads(text)
+                    _LOGGER.debug("JSON geparst. Keys: %s", list(data.keys()))
+                    _LOGGER.debug("Anzahl Tarife: %d", len(data.get("tariffs", [])))
                     
             for t in data.get("tariffs", []):
                 name = t.get("tariffName", "Unknown")
@@ -168,15 +178,26 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 # Zeige Typ und Form im Namen an
                 label = f"{name} ({t_type}, {t_form})"
                 tariff_choices[name] = label
+                _LOGGER.debug("Tarif gefunden: %s -> %s", name, label)
                 
+        except json.JSONDecodeError as err:
+            _LOGGER.error("JSON Decode Fehler: %s", err)
+            _LOGGER.error("Text preview: %s", text[:200] if text else "N/A")
+            errors["base"] = "cannot_connect"
+        except aiohttp.ClientError as err:
+            _LOGGER.error("HTTP Client Fehler: %s", err)
+            errors["base"] = "cannot_connect"
         except Exception as err:
-            _LOGGER.error("Tarif-Ladefehler: %s", err)
+            _LOGGER.error("Unerwarteter Tarif-Ladefehler: %s", err, exc_info=True)
             errors["base"] = "cannot_connect"
             # Fallback: leere Liste
             tariff_choices = {}
         
         if not tariff_choices:
+            _LOGGER.warning("Keine Tarife gefunden für URL: %s", dso_url)
             errors["base"] = "no_tariffs"
+        
+        _LOGGER.debug("Tarif-Formular wird angezeigt. %d Tarife verfügbar. Fehler: %s", len(tariff_choices), errors)
         
         return self.async_show_form(
             step_id="tariff",

@@ -59,10 +59,14 @@ class SECEnergyPriceSensor(SECEnergyBaseSensor):
 
     @property
     def native_value(self):
+        _LOGGER.debug("SECEnergyPriceSensor.native_value() aufgerufen")
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
+            _LOGGER.warning("Kein Tarif in coordinator.data vorhanden")
             return None
-        return get_current_price(tariff, datetime.now())
+        price = get_current_price(tariff, datetime.now())
+        _LOGGER.debug("Aktueller Preis: %s CHF/kWh", price)
+        return price
 
     @property
     def extra_state_attributes(self):
@@ -91,15 +95,21 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
 
     @property
     def native_value(self):
+        _LOGGER.debug("SECEnergyForecastSensor.native_value() aufgerufen")
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
+            _LOGGER.warning("Kein Tarif in coordinator.data vorhanden")
             return None
-        return get_current_price(tariff, datetime.now())
+        price = get_current_price(tariff, datetime.now())
+        _LOGGER.debug("Forecast aktueller Preis: %s CHF/kWh", price)
+        return price
 
     @property
     def extra_state_attributes(self):
+        _LOGGER.debug("SECEnergyForecastSensor.extra_state_attributes() aufgerufen")
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
+            _LOGGER.warning("Kein Tarif für Forecast vorhanden")
             return {}
         
         now = datetime.now()
@@ -109,12 +119,14 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
             future_hour = future.replace(minute=0, second=0, microsecond=0)
             if future_hour < now.replace(minute=0, second=0, microsecond=0):
                 future_hour += timedelta(hours=1)
+            price = get_current_price(tariff, future_hour)
             forecast.append({
                 "hour": future_hour.isoformat(),
-                "price": get_current_price(tariff, future_hour),
+                "price": price,
                 "price_unit": "CHF/kWh"
             })
         
+        _LOGGER.debug("Forecast generiert: %d Einträge", len(forecast))
         return {"forecast": forecast}
 
 
@@ -129,12 +141,16 @@ class SECEnergyBasePriceSensor(SECEnergyBaseSensor):
 
     @property
     def native_value(self):
+        _LOGGER.debug("SECEnergyBasePriceSensor.native_value() aufgerufen")
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
+            _LOGGER.warning("Kein Tarif für Grundgebühr vorhanden")
             return None
         prices = tariff.get("prices", {})
         base = prices.get("base", {})
-        return base.get("price", 0)
+        value = base.get("price", 0)
+        _LOGGER.debug("Grundgebühr: %s %s", value, base.get("priceUnit", ""))
+        return value
 
 
 def get_current_price(tariff, dt):
