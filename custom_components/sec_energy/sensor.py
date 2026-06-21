@@ -186,6 +186,7 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
             return None
         price = get_current_price(tariff, datetime.now())
         _LOGGER.debug("Forecast aktueller Preis: %s CHF/kWh", price)
+        _LOGGER.info("FORECAST_SENSOR: Tarif=%s, Preis=%s", tariff.get("tariffName", "unknown"), price)
         return price
 
     @property
