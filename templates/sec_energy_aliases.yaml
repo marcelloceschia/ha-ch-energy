@@ -1,0 +1,112 @@
+# SEC Energy Alias Template Sensors
+# 
+# Füge dies zu deiner configuration.yaml hinzu oder speichere es als
+# templates/sec_energy_aliases.yaml und binde es mit
+# template: !include templates/sec_energy_aliases.yaml ein
+#
+# WICHTIG: Ersetze "sensor.stadtwerke_wetzikon" mit deinem tatsächlichen DSO-Namen!
+# Der Name wird während der Integration-Setup vergeben (z.B. "Stadtwerke Wetzikon")
+
+# Option 1: In configuration.yaml einfügen
+template:
+  - sensor:
+      - name: "Strompreis Aktuell"
+        unique_id: sec_energy_alias_current_price
+        state: "{{ states('sensor.stadtwerke_wetzikon_aktueller_preis') | float(0) }}"
+        unit_of_measurement: "CHF/kWh"
+        state_class: measurement
+        icon: mdi:lightning-bolt
+        attributes:
+          tariff_name: "{{ state_attr('sensor.stadtwerke_wetzikon_aktueller_preis', 'tariff_name') }}"
+          tariff_type: "{{ state_attr('sensor.stadtwerke_wetzikon_aktueller_preis', 'tariff_type') }}"
+          base_price_monthly: "{{ state_attr('sensor.stadtwerke_wetzikon_aktueller_preis', 'base_price_monthly') }}"
+          base_price_unit: "{{ state_attr('sensor.stadtwerke_wetzikon_aktueller_preis', 'base_price_unit') }}"
+
+      - name: "Strompreis Forecast"
+        unique_id: sec_energy_alias_forecast
+        state: "{{ states('sensor.stadtwerke_wetzikon_preisvorhersage') | float(0) }}"
+        unit_of_measurement: "CHF/kWh"
+        state_class: measurement
+        icon: mdi:chart-line
+        attributes:
+          forecast: "{{ state_attr('sensor.stadtwerke_wetzikon_preisvorhersage', 'forecast') }}"
+
+      - name: "Strompreis Grundgebühr"
+        unique_id: sec_energy_alias_base_price
+        state: "{{ states('sensor.stadtwerke_wetzikon_grundgebuehr') | float(0) }}"
+        unit_of_measurement: "CHF/Monat"
+        icon: mdi:cash
+
+      - name: "Strompreis Ist Hochtarif"
+        unique_id: sec_energy_alias_is_high_tariff
+        state: >
+          {% set current = states('sensor.strompreis_aktuell') | float(0) %}
+          {% set forecast = state_attr('sensor.strompreis_forecast', 'forecast') %}
+          {% if forecast %}
+            {% set prices = forecast | map(attribute='price') | list %}
+            {% set max_price = prices | max if prices else current %}
+            {{ 'true' if current >= max_price else 'false' }}
+          {% else %}
+            {{ 'false' }}
+          {% endif %}
+        icon: mdi:clock-time-eight-outline
+
+      - name: "Strompreis Nächste Stunde"
+        unique_id: sec_energy_alias_next_hour
+        state: >
+          {% set forecast = state_attr('sensor.strompreis_forecast', 'forecast') %}
+          {% if forecast and forecast | length > 1 %}
+            {{ forecast[1].price }}
+          {% else %}
+            {{ states('sensor.strompreis_aktuell') | float(0) }}
+          {% endif %}
+        unit_of_measurement: "CHF/kWh"
+        icon: mdi:arrow-right
+
+      - name: "Strompreis Tiefster Heute"
+        unique_id: sec_energy_alias_lowest_today
+        state: >
+          {% set forecast = state_attr('sensor.strompreis_forecast', 'forecast') %}
+          {% if forecast %}
+            {% set prices = forecast | map(attribute='price') | list %}
+            {{ prices | min if prices else 0 }}
+          {% else %}
+            0
+          {% endif %}
+        unit_of_measurement: "CHF/kWh"
+        icon: mdi:arrow-down-bold
+
+      - name: "Strompreis Höchster Heute"
+        unique_id: sec_energy_alias_highest_today
+        state: >
+          {% set forecast = state_attr('sensor.strompreis_forecast', 'forecast') %}
+          {% if forecast %}
+            {% set prices = forecast | map(attribute='price') | list %}
+            {{ prices | max if prices else 0 }}
+          {% else %}
+            0
+          {% endif %}
+        unit_of_measurement: "CHF/kWh"
+        icon: mdi:arrow-up-bold
+
+      - name: "Strompreis Durchschnitt Heute"
+        unique_id: sec_energy_alias_average_today
+        state: >
+          {% set forecast = state_attr('sensor.strompreis_forecast', 'forecast') %}
+          {% if forecast %}
+            {% set prices = forecast | map(attribute='price') | list %}
+            {{ (prices | sum / prices | length) | round(4) if prices else 0 }}
+          {% else %}
+            0
+          {% endif %}
+        unit_of_measurement: "CHF/kWh"
+        icon: mdi:calculator
+
+      - name: "Strompreis Kostenvoranschlag Heute"
+        unique_id: sec_energy_alias_cost_estimate
+        state: >
+          {% set daily_kwh = states('sensor.daily_energy') | float(0) %}
+          {% set avg_price = states('sensor.strompreis_durchschnitt_heute') | float(0) %}
+          {{ (daily_kwh * avg_price) | round(2) }}
+        unit_of_measurement: "CHF"
+        icon: mdi:cash-multiple

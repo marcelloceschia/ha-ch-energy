@@ -93,17 +93,30 @@ Alle verfügbaren Tarife werden dynamisch von der API geladen. Wähle deinen Tar
 | `sensor.{dso_name}_preisvorhersage` | Preisvorhersage 24h (Attribute: `forecast`) |
 | `sensor.{dso_name}_grundgebuehr` | Monatliche Grundgebühr (CHF) |
 
-### Alias-Sensoren (kurze, generische Namen)
+**Hinweis:** `{dso_name}` wird während der Einrichtung festgelegt (z.B. `stadtwerke_wetzikon`).
+
+### Alias Template-Sensoren (optional)
+
+Kopiere [`templates/sec_energy_aliases.yaml`](templates/sec_energy_aliases.yaml) in deine Home Assistant Konfiguration und passe den DSO-Namen an:
+
+```yaml
+# In configuration.yaml:
+template: !include templates/sec_energy_aliases.yaml
+```
+
+Dies erstellt folgende kurze Entitätsnamen:
 
 | Entität | Beschreibung |
 |---------|-------------|
-| `sensor.strompreis_aktuell` | Aktueller Strompreis (CHF/kWh) |
-| `sensor.strompreis_forecast` | Preisvorhersage 24h (Attribute: `forecast`) |
-| `sensor.strompreis_grundgebuehr` | Monatliche Grundgebühr (CHF) |
-| `sensor.strompreis_ist_hochtarif` | Hochtarif aktiv? (`true`/`false`) |
-| `sensor.strompreis_naechste_stunde` | Preis nächste Stunde (CHF/kWh) |
-| `sensor.strompreis_tiefster_heute` | Tiefster Preis heute (CHF/kWh) |
-| `sensor.strompreis_hoechster_heute` | Höchster Preis heute (CHF/kWh) |
+| `sensor.strompreis_aktuell` | Aktueller Strompreis |
+| `sensor.strompreis_forecast` | 24h Vorhersage (Attribut: `forecast`) |
+| `sensor.strompreis_grundgebuehr` | Grundgebühr/Monat |
+| `sensor.strompreis_ist_hochtarif` | `true`/`false` |
+| `sensor.strompreis_naechste_stunde` | Preis nächste Stunde |
+| `sensor.strompreis_tiefster_heute` | Tiefster Preis heute |
+| `sensor.strompreis_hoechster_heute` | Höchster Preis heute |
+| `sensor.strompreis_durchschnitt_heute` | Durchschnittspreis heute |
+| `sensor.strompreis_kostenvoranschlag_heute` | Geschätzte Kosten heute |
 
 ## Dashboard-Karten
 
