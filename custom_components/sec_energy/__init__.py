@@ -40,7 +40,7 @@ class SECEnergyCoordinator(DataUpdateCoordinator):
         _LOGGER.debug("URL: %s, Tarif: %s", self.url, self.tariff_name)
         try:
             import json
-            async with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
                 async with session.get(self.url, timeout=aiohttp.ClientTimeout(total=30)) as response:
                     _LOGGER.debug("HTTP Status: %s", response.status)
                     text = await response.text()

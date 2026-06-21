@@ -161,7 +161,7 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         try:
             import json
             _LOGGER.debug("Lade Tarife von URL: %s", dso_url)
-            async with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
                 async with session.get(dso_url, timeout=aiohttp.ClientTimeout(total=30)) as response:
                     _LOGGER.debug("HTTP Status: %s, Content-Type: %s", response.status, response.headers.get('content-type'))
                     text = await response.text()
