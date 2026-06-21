@@ -26,7 +26,7 @@ Home Assistant Integration für schweizer Stromtarife im SEC-Energy JSON-Format.
 ### HACS (empfohlen)
 
 1. HACS → Integrationen → Benutzerdefinierte Repositories
-2. URL: `https://github.com/marcelloceschia/ha-sec-energy`
+2. URL: `https://github.com/marcelloceschia/ha-ch-energy`
 3. Kategorie: Integration
 4. Installieren → Neustart
 

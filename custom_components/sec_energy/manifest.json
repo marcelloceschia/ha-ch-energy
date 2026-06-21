@@ -4,7 +4,7 @@
   "codeowners": ["@marcelloceschia"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/marcelloceschia/ha-sec-energy",
+  "documentation": "https://github.com/marcelloceschia/ha-ch-energy",
   "iot_class": "cloud_polling",
   "requirements": ["aiohttp>=3.8.0"],
   "version": "1.0.0"
