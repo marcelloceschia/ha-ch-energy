@@ -189,17 +189,6 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
         return price
 
     @property
-    def state(self):
-        """Return the state, fallback to current price if native_value is None."""
-        value = self.native_value
-        if value is None:
-            # Try to get current price from coordinator data directly
-            tariff = self.coordinator.data.get("tariff")
-            if tariff:
-                return get_current_price(tariff, datetime.now())
-        return value
-
-    @property
     def extra_state_attributes(self):
         _LOGGER.debug("SECEnergyForecastSensor.extra_state_attributes() aufgerufen")
         tariff = self.coordinator.data.get("tariff")
@@ -313,16 +302,6 @@ class SECEnergyForecastAlias(CoordinatorEntity, SensorEntity):
         if not tariff:
             return None
         return get_current_price(tariff, datetime.now())
-
-    @property
-    def state(self):
-        """Return the state, fallback to current price if native_value is None."""
-        value = self.native_value
-        if value is None:
-            tariff = self.coordinator.data.get("tariff")
-            if tariff:
-                return get_current_price(tariff, datetime.now())
-        return value
 
     @property
     def extra_state_attributes(self):
