@@ -85,11 +85,25 @@ Alle verfügbaren Tarife werden dynamisch von der API geladen. Wähle deinen Tar
 
 ## Erstellte Entitäten
 
+### Haupt-Sensoren (mit DSO-Namen)
+
+| Entität | Beschreibung |
+|---------|-------------|
+| `sensor.{dso_name}_aktueller_preis` | Aktueller Strompreis (CHF/kWh) |
+| `sensor.{dso_name}_preisvorhersage` | Preisvorhersage 24h (Attribute: `forecast`) |
+| `sensor.{dso_name}_grundgebuehr` | Monatliche Grundgebühr (CHF) |
+
+### Alias-Sensoren (kurze, generische Namen)
+
 | Entität | Beschreibung |
 |---------|-------------|
 | `sensor.strompreis_aktuell` | Aktueller Strompreis (CHF/kWh) |
-| `sensor.strompreis_vorhersage` | Preisvorhersage 24h (Attribute: `forecast`) |
-| `sensor.grundgebuehr` | Monatliche Grundgebühr (CHF) |
+| `sensor.strompreis_forecast` | Preisvorhersage 24h (Attribute: `forecast`) |
+| `sensor.strompreis_grundgebuehr` | Monatliche Grundgebühr (CHF) |
+| `sensor.strompreis_ist_hochtarif` | Hochtarif aktiv? (`true`/`false`) |
+| `sensor.strompreis_naechste_stunde` | Preis nächste Stunde (CHF/kWh) |
+| `sensor.strompreis_tiefster_heute` | Tiefster Preis heute (CHF/kWh) |
+| `sensor.strompreis_hoechster_heute` | Höchster Preis heute (CHF/kWh) |
 
 ## Dashboard-Karten
 
@@ -116,9 +130,11 @@ type: entities
 title: ⚡ Strompreis Übersicht
 entities:
   - sensor.strompreis_aktuell
+  - sensor.strompreis_ist_hochtarif
   - sensor.strompreis_naechste_stunde
   - sensor.strompreis_tiefster_heute
   - sensor.strompreis_hoechster_heute
+  - sensor.strompreis_grundgebuehr
 ```
 
 ## Automatisierungen
