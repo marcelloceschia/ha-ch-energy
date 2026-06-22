@@ -1,9 +1,10 @@
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass, SensorStateClass
 from homeassistant.const import UnitOfEnergy
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.helpers.event import async_track_point_in_time
 from datetime import datetime, timedelta
 import logging
 
@@ -249,14 +250,72 @@ class SECEnergyBasePriceSensor(SECEnergyBaseSensor):
 # ALIAS SENSORS (short, generic names - for easy use in dashboards)
 # ============================================================================
 
-class SECEnergyPriceAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyTimeAwareAlias(CoordinatorEntity, SensorEntity):
+    """Base class for alias sensors that need updates at tariff boundaries.
+
+    Automatically schedules state updates at the next tariff change time.
+    """
+
+    def __init__(self, coordinator, entry):
+        super().__init__(coordinator)
+        self._entry = entry
+        self._next_change_unsub = None
+
+    async def async_added_to_hass(self):
+        """When entity is added to hass, schedule next tariff change."""
+        await super().async_added_to_hass()
+        self._schedule_next_tariff_change()
+
+    @callback
+    def _handle_coordinator_update(self):
+        """Handle updated data from the coordinator."""
+        super()._handle_coordinator_update()
+        self._schedule_next_tariff_change()
+
+    def _schedule_next_tariff_change(self):
+        """Calculate and schedule update at next tariff boundary."""
+        if self._next_change_unsub:
+            self._next_change_unsub()
+            self._next_change_unsub = None
+
+        tariff = self.coordinator.data.get("tariff")
+        if not tariff:
+            return
+
+        next_change = get_next_tariff_change(tariff, datetime.now())
+        if next_change:
+            _LOGGER.debug(
+                "%s: Next tariff change at %s",
+                self._attr_name,
+                next_change.isoformat(),
+            )
+            self._next_change_unsub = async_track_point_in_time(
+                self.hass, self._on_tariff_change, next_change
+            )
+
+    @callback
+    def _on_tariff_change(self, _now):
+        """Called at tariff boundary — force state refresh."""
+        _LOGGER.debug("%s: Tariff boundary reached, updating state", self._attr_name)
+        self._next_change_unsub = None
+        self.async_write_ha_state()
+        self._schedule_next_tariff_change()
+
+    async def async_will_remove_from_hass(self):
+        """Cleanup scheduled tariff change when entity is removed."""
+        if self._next_change_unsub:
+            self._next_change_unsub()
+            self._next_change_unsub = None
+        await super().async_will_remove_from_hass()
+
+
+class SECEnergyPriceAlias(SECEnergyTimeAwareAlias):
     """Alias sensor: sensor.strompreis_aktuell"""
     _sensor_type = "alias_current_price"
     _sensor_name = "Strompreis Aktuell"
 
     def __init__(self, coordinator, entry):
-        super().__init__(coordinator)
-        self._entry = entry
+        super().__init__(coordinator, entry)
         self._attr_unique_id = f"{entry.entry_id}_alias_current_price"
         self._attr_name = "Strompreis Aktuell"
         self._attr_native_unit_of_measurement = "CHF/kWh"
@@ -279,14 +338,13 @@ class SECEnergyPriceAlias(CoordinatorEntity, SensorEntity):
         return self.coordinator.last_update_success
 
 
-class SECEnergyForecastAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyForecastAlias(SECEnergyTimeAwareAlias):
     """Alias sensor: sensor.strompreis_forecast"""
     _sensor_type = "alias_forecast"
     _sensor_name = "Strompreis Forecast"
 
     def __init__(self, coordinator, entry):
-        super().__init__(coordinator)
-        self._entry = entry
+        super().__init__(coordinator, entry)
         self._attr_unique_id = f"{entry.entry_id}_alias_forecast"
         self._attr_name = "Strompreis Forecast"
         self._attr_native_unit_of_measurement = "CHF/kWh"
@@ -319,17 +377,16 @@ class SECEnergyForecastAlias(CoordinatorEntity, SensorEntity):
             future = now + timedelta(hours=i)
             future_hour = future.replace(minute=0, second=0, microsecond=0)
             if future_hour < now.replace(minute=0, second=0, microsecond=0):
-                future_hour += timedelta(hours=1)
+                continue
             price = get_current_price(tariff, future_hour)
-            category = get_price_category(price, all_prices)
+            cat = get_price_category(price, all_prices)
             forecast.append({
                 "hour": future_hour.isoformat(),
                 "price": price,
-                "price_unit": "CHF/kWh",
-                "category": category["category"],
-                "category_label": category["label"],
-                "percentile": category["percentile"]
+                "category": cat["category"],
+                "label": cat["label"],
             })
+        
         return {"forecast": forecast}
 
     @property
@@ -368,18 +425,18 @@ class SECEnergyBasePriceAlias(CoordinatorEntity, SensorEntity):
         return self.coordinator.last_update_success
 
 
-class SECEnergyIsHighTariffAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyIsHighTariffAlias(SECEnergyTimeAwareAlias):
     """Alias sensor: sensor.strompreis_ist_hochtarif
     
     Dynamically determines if current price is the high tariff rate
     by comparing current price against all prices in the tariff.
+    Schedules updates at exact tariff change times.
     """
     _sensor_type = "alias_is_high_tariff"
     _sensor_name = "Strompreis Ist Hochtarif"
 
     def __init__(self, coordinator, entry):
-        super().__init__(coordinator)
-        self._entry = entry
+        super().__init__(coordinator, entry)
         self._attr_unique_id = f"{entry.entry_id}_alias_is_high_tariff"
         self._attr_name = "Strompreis Ist Hochtarif"
         self._attr_icon = "mdi:clock-time-eight-outline"
@@ -424,14 +481,13 @@ class SECEnergyIsHighTariffAlias(CoordinatorEntity, SensorEntity):
         return self.coordinator.last_update_success
 
 
-class SECEnergyNextHourAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyNextHourAlias(SECEnergyTimeAwareAlias):
     """Alias sensor: sensor.strompreis_naechste_stunde"""
     _sensor_type = "alias_next_hour"
     _sensor_name = "Strompreis Nächste Stunde"
 
     def __init__(self, coordinator, entry):
-        super().__init__(coordinator)
-        self._entry = entry
+        super().__init__(coordinator, entry)
         self._attr_unique_id = f"{entry.entry_id}_alias_next_hour"
         self._attr_name = "Strompreis Nächste Stunde"
         self._attr_native_unit_of_measurement = "CHF/kWh"
@@ -454,14 +510,13 @@ class SECEnergyNextHourAlias(CoordinatorEntity, SensorEntity):
         return self.coordinator.last_update_success
 
 
-class SECEnergyLowestTodayAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyLowestTodayAlias(SECEnergyTimeAwareAlias):
     """Alias sensor: sensor.strompreis_tiefster_heute"""
     _sensor_type = "alias_lowest_today"
     _sensor_name = "Strompreis Tiefster Heute"
 
     def __init__(self, coordinator, entry):
-        super().__init__(coordinator)
-        self._entry = entry
+        super().__init__(coordinator, entry)
         self._attr_unique_id = f"{entry.entry_id}_alias_lowest_today"
         self._attr_name = "Strompreis Tiefster Heute"
         self._attr_native_unit_of_measurement = "CHF/kWh"
@@ -490,14 +545,13 @@ class SECEnergyLowestTodayAlias(CoordinatorEntity, SensorEntity):
         return self.coordinator.last_update_success
 
 
-class SECEnergyHighestTodayAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyHighestTodayAlias(SECEnergyTimeAwareAlias):
     """Alias sensor: sensor.strompreis_hoechster_heute"""
     _sensor_type = "alias_highest_today"
     _sensor_name = "Strompreis Höchster Heute"
 
     def __init__(self, coordinator, entry):
-        super().__init__(coordinator)
-        self._entry = entry
+        super().__init__(coordinator, entry)
         self._attr_unique_id = f"{entry.entry_id}_alias_highest_today"
         self._attr_name = "Strompreis Höchster Heute"
         self._attr_native_unit_of_measurement = "CHF/kWh"
@@ -545,7 +599,7 @@ def get_current_price(tariff, dt):
             return tier["price"]
     
     if energy_tiers:
-        return energy_tiers[-1]["price"]
+        return min(tier["price"] for tier in energy_tiers)
     return 0.0
 
 
@@ -561,3 +615,55 @@ def time_in_range(from_time, to_time, check_time):
     if from_min <= to_min:
         return from_min <= check_min < to_min
     return check_min >= from_min or check_min < to_min
+
+
+def get_next_tariff_change(tariff, now):
+    """Calculate the next time when the tariff price changes.
+
+    Examines all energy tiers and finds the next from/to boundary
+    that is strictly after the current time.
+
+    Returns:
+        datetime of next change, or None if no change found.
+    """
+    prices = tariff.get("prices", {})
+    energy_tiers = prices.get("energy", [])
+    if not energy_tiers:
+        return None
+
+    weekday = WEEKDAY_MAP[now.weekday()]
+    month = MONTH_MAP[now.month]
+
+    # Collect all time boundaries (from and to) for tiers that apply today
+    boundaries = set()
+    for tier in energy_tiers:
+        if month not in tier.get("months", []):
+            continue
+        if weekday not in tier.get("weekdays", []):
+            continue
+        boundaries.add(tier["from"])
+        boundaries.add(tier["to"])
+
+    if not boundaries:
+        return None
+
+    # Find the next boundary after current time
+    current_min = now.hour * 60 + now.minute
+    next_min = None
+
+    for boundary in boundaries:
+        h, m = map(int, boundary.split(":"))
+        boundary_min = h * 60 + m
+        # Skip boundaries that are exactly now or in the past
+        if boundary_min <= current_min:
+            continue
+        if next_min is None or boundary_min < next_min:
+            next_min = boundary_min
+
+    # If no boundary found today, the next change is at midnight (00:00 tomorrow)
+    if next_min is None:
+        next_change = datetime(now.year, now.month, now.day, 0, 0) + timedelta(days=1)
+    else:
+        next_change = datetime(now.year, now.month, now.day, next_min // 60, next_min % 60)
+
+    return next_change
