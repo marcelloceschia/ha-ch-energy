@@ -169,7 +169,7 @@ PREDEFINED_DSOS = {
     "IB Wohlen AG": "https://www.ibw.ag/mm/Tarife_IB_Wohlen_AG_2026.json",
     "IBB Strom AG": "https://www.ibbrugg.ch/hubfs/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250917_ibb_strompreise_2026.json",
     "IWB": "https://www.iwb.ch/dam/jcr:4c273699-fbe7-4e2e-bdb4-cf908631dd1c/maschinell-lesbare-tarife-strom.json",
-    "Industrielle Betriebe Interlaken AG": "https://www.ibi.ch/download/documents/2e/f3c23qsicm3k9idz2arnv0qoxxew05/20250825_tariffs.json",
+    "Industrielle Betriebe Interlaken AG": "https://www.ibi.ch/media/documents/20260821_tariffs.json",
     "Infrastruktur Zürichsee AG": "https://www.infra-z.ch/images/downloads/Tarife_Strom_maschinenlesbares_Format_2026.json",
     "Localnet AG": "https://www.localnet.ch/fileadmin/user_upload/Strom/Formulare_und_PDF/Maschinenlesbare_Information.json",
     "OIKEN SA": "https://oiken.ch/tarifs/tariffs_OIKEN_2026.json",
