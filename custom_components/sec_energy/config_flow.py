@@ -161,7 +161,7 @@ PREDEFINED_DSOS = {
     "Elektrizitätswerk Muhen": "https://www.muhen.ch/public/upload/assets/3522/Tarife%20Elektrizit%C3%A4tswerk%20Muhen.json",
     "Elektrizitätswerk Rümlang Genossenschaft": "https://www.ewruemlang.ch/uploads/files/Dokumente/ELCOM_Upload/2026-Maschinenlesbare-EWR-Tarife.json",
     "Elektrizitätswerk Sennwald": "https://www.ewsennwald.ch/fileadmin/user_upload/EW_Sennwald_Tarife_2026.json",
-    "Energie Gossau AG": "https://energiegossau.ch/site/assets/files/1029/tarife_energie_gossau_ag_2026.json",
+    "Energie Gossau AG": "https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json",
     "Energie Grüningen AG": "https://energie-grueningen.ch/neu/wp-content/uploads/2025/08/Tarife_Energie_Grueningen_AG_2026.json",
     "Energie Kreuzlingen": "https://energiekreuzlingen.ch/maschinenlesbar_mitteilung_tarifaenderungen_2026_energie_kreuzlingen.json",
     "Energie Münchenbuchsee AG": "https://www.energiebuchsi.ch/de/angebot/strom/20250811-tariffs.json",

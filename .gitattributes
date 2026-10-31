@@ -1,0 +1,2 @@
+# Preserve the original published Gossau fixture (CRLF) for provenance.
+tests/fixtures/gossau_2026_2027.json -text whitespace=cr-at-eol
