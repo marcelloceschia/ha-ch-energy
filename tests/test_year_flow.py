@@ -1,4 +1,4 @@
-"""Config flow uses the same hybrid resolver as runtime."""
+"""Config flow uses the same Jahres-Map resolver as runtime."""
 import ast
 from datetime import datetime
 from pathlib import Path

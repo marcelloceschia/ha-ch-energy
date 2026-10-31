@@ -94,7 +94,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return unload_ok
 
 async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Persist identity, not a frozen copy of the release's source catalogue."""
+    """Persist identity so migration follows the live Jahres-Map catalogue."""
     if entry.version == 1:
         data = dict(entry.data)
         url = data.get("dso_url")

@@ -41,6 +41,7 @@
     "step": {
       "init": {
         "title": "SEC Energy Settings",
+        "description": "Predefined providers use a year map (Jahres-Map) for year-specific URLs. Yearless and custom URLs remain fixed; tariff validity is always checked.",
         "data": {
           "tariff": "Tariff",
           "scan_interval": "Update Interval (seconds)"

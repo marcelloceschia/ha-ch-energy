@@ -41,6 +41,7 @@
     "step": {
       "init": {
         "title": "SEC Energy Einstellungen",
+        "description": "Vordefinierte Versorger nutzen eine Jahres-Map für jahresbezogene URLs. Jahreslose und eigene URLs bleiben fest; die Tarifgültigkeit wird immer geprüft.",
         "data": {
           "tariff": "Tarif",
           "scan_interval": "Aktualisierungsintervall (Sekunden)"

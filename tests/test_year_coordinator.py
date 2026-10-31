@@ -24,7 +24,7 @@ class Coordinator:
 def load_code():
     namespace = dict(DataUpdateCoordinator=Coordinator, timedelta=timedelta,
                      _LOGGER=logging.getLogger('test'), DOMAIN='sec_energy', DEFAULT_SCAN_INTERVAL=86400,
-                     PREDEFINED_DSOS={'Test DSO': 'https://test/{year}.json'},
+                     PREDEFINED_DSOS={'Test DSO': {2026: 'https://test/2026.json'}},
                      dt_util=SimpleNamespace(now=lambda: datetime(2026, 12, 31, 12)),
                      ir=SimpleNamespace(async_create_issue=Mock(), async_delete_issue=Mock(),
                                         IssueSeverity=SimpleNamespace(WARNING='warning')),
@@ -107,6 +107,31 @@ class CoordinatorTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(after['data_expired'])
         self.assertEqual(after['valid_until'], '2026-12-31')
         self.ns['ir'].async_create_issue.assert_called()
+
+    async def test_ibb_datestamp_guess_rejected_uses_expired_cache(self):
+        url = 'https://www.ibbrugg.ch/hubfs/2026/20250917_ibb_strompreise_2026.json'
+        self.ns['PREDEFINED_DSOS']['Test DSO'] = {2026: url}
+        before = await self.coordinator._async_update_data()
+        self.ns['dt_util'].now = lambda: datetime(2027, 1, 1, 12)
+        # Even HTTP 200/schema-valid guesses may serve last year's document.
+        self.coordinator._fetch_document.reset_mock()
+        after = await self.coordinator._async_update_data()
+        self.assertEqual(after['tariff'], before['tariff'])
+        self.assertEqual(after['last_price'], 20)
+        self.assertTrue(after['data_expired'])
+        self.assertEqual(self.entry.data['resolved_url'], url)
+        self.assertEqual([c.args[0] for c in self.coordinator._fetch_document.await_args_list],
+                         [url.replace('2026', '2027'), url])
+        self.ns['ir'].async_create_issue.assert_called()
+
+    async def test_yearless_source_and_migration_remain_fixed(self):
+        url = 'https://www.groupe-e.ch/tarifs/tarifs.json'
+        self.ns['PREDEFINED_DSOS'] = {'Groupe E': url}
+        self.entry.data['dso_url'] = url
+        await self.ns['async_migrate_entry'](self.hass, self.entry)
+        self.assertEqual(self.entry.data['dso_key'], 'Groupe E')
+        await self.coordinator._async_update_data()
+        self.coordinator._fetch_document.assert_awaited_once_with(url)
 
     async def test_all_urls_dead_uses_persistent_cache_without_reset(self):
         before = await self.coordinator._async_update_data()

@@ -37,6 +37,18 @@
       "no_tariffs": "No currently valid tariff is available. Please try again after the tariff source has been updated."
     }
   },
+  "options": {
+    "step": {
+      "init": {
+        "title": "SEC Energy Settings",
+        "description": "Predefined providers use a year map (Jahres-Map) for year-specific URLs. Yearless and custom URLs remain fixed; tariff validity is always checked.",
+        "data": {
+          "tariff": "Tariff",
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    }
+  },
   "issues": {
     "tariff_expired": {
       "title": "Tariff data unavailable or expired",

@@ -1,19 +1,26 @@
-"""Date-aware tariff selection and hybrid source resolution (HA-independent)."""
+"""Date-aware tariff selection and Jahres-Map resolution (HA-independent)."""
 from datetime import date
 import logging
-import re
 
 _LOGGER = logging.getLogger(__name__)
 
 
 def source_candidates(source, day):
-    """Exact year first, Q4 next year, then previous-year grace."""
+    """Jahres-Map: exact year or substitution, Q4 next year, previous grace.
+
+    Only the newest known entry is used for guesses. Publication datestamps
+    are not inferred: every guessed response still needs schema/date checks.
+    Yearless strings (including custom URLs) are fetched unchanged.
+    """
+    if not isinstance(source, dict):
+        return [source]
+    if not source:
+        return []
+    latest = max(source)
     years = [day.year] + ([day.year + 1] if day.month >= 10 else []) + [day.year - 1]
-    if isinstance(source, dict):
-        return list(dict.fromkeys(source[y] for y in years if y in source))
-    if '{year}' in source:
-        return [source.replace('{year}', str(y)) for y in years]
-    return [source]
+    return list(dict.fromkeys(
+        source[y] if y in source else source[latest].replace(str(latest), str(y))
+        for y in years))
 
 
 def match_dso(url, sources):
@@ -22,8 +29,7 @@ def match_dso(url, sources):
         if isinstance(source, dict):
             if url in source.values():
                 return key
-        elif source == url or ('{year}' in source and re.fullmatch(
-                re.escape(source).replace(r'\{year\}', r'\d{4}'), url or '')):
+        elif source == url:
             return key
     return None
 

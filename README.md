@@ -56,6 +56,27 @@ Die Integration unterstützt alle SEC-Energy-kompatiblen APIs. Hier eine Auswahl
 | **+ 60 weitere Anbieter** | **Schweizweit** |
 | Custom / Other | Beliebige SEC-Energy-kompatible URL |
 
+## Tarifjahr-Wechsel
+
+Vordefinierte Anbieter mit einer Jahreszahl in der URL nutzen einheitlich eine
+**Jahres-Map** mit Ganzzahl-Schlüsseln, beispielsweise
+`{2026: "https://www.tbflawil.ch/tarifkommunikation/2026_tariffs.json", ...}`.
+Jahreslose Quellen und eigene URLs bleiben feste Strings.
+
+Die Auflösung prüft zuerst den exakten Jahreseintrag. Fehlt er, wird im jüngsten
+Map-Eintrag dessen Jahreszahl durch das gesuchte Jahr ersetzt. Danach folgen
+ab Oktober das Folgejahr und anschließend das Vorjahr als Grace. Jeder Kandidat
+muss das Schema und die Gültigkeitsprüfung bestehen; heute gültige Tarife haben
+Vorrang vor einem nur für das Folgejahr gültigen Dokument. Publikations-Datestamps
+lassen sich nicht zuverlässig erraten: recherchierte Folgejahres-URLs gehören in
+die Jahres-Map. Bei vollständigem Fehlschlag bleiben Cache und letzter bekannter
+Preis erhalten, mit `data_expired` und einem Repair-Hinweis statt stillschweigend
+veralteter Preise. Folgejahresdaten ersetzen niemals vorzeitig heutige Preise.
+
+Die Migration v1 → v2 speichert die Anbieteridentität (`dso_key`) und liest damit
+bei jedem Abruf die aktuelle Jahres-Map aus dem Katalog; sie friert keine Kopie
+der Map im Config Entry ein. Nicht zuordenbare eigene URLs bleiben unverändert.
+
 ## Installation
 
 ### HACS (empfohlen)
