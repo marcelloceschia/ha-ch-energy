@@ -217,7 +217,7 @@ PREDEFINED_DSOS = {
     "Technische Betriebe Glarus Nord (TBGN)": {2026: "https://www.tbgn.ch/images/T2026/TBGN-Strom-Tarife-2026.json"},
     "Technische Betriebe Oberentfelden": {2026: "https://www.oberentfelden.ch/sites/default/files/2025-08/Tarife_Technische_Betriebe_Oberentfelden_2026.json"},
     "Technische Betriebe Weinfelden AG": {2026: "https://tbweinfelden.ch/stromtarife/stromtarife-2026.json", 2027: "https://www.tbweinfelden.ch/stromtarife/stromtarife-2027.json"},
-    "Technische Gemeindebetriebe Wängi": {2026: "https://tbwaengi.ch/userdata/files/preise_2026_tbwaengi_maschinenlesbar.json"},
+    "Technische Gemeindebetriebe Wängi": {2026: "https://tbwaengi.ch/userdata/files/preise_2026_tbwaengi_maschinenlesbar.json", 2027: "https://www.tbwaengi.ch/userdata/dateien/json_dateien/preise-2027-tbwaengi-maschinenlesbar.json"},
     "Technische Werke Eschlikon": {2026: "https://www.eschlikon.ch/public/upload/assets/5485/preise-2026-tweschlikon_maschinenlesbar.json", 2027: "https://sec-energy.ch/tarifdaten/eschlikon/tariffs-10011012345-technische-werke-eschlikon-2027.json"},
     "Thurwerke AG": {2026: "https://thurwerke.ch/wp-content/uploads/2025/08/Tarifblatt_2026_Thurwerke_AG.json", 2027: "https://thurwerke.ch/wp-content/uploads/2026/08/Tarife_Thurwerke_AG_2026-2027.json"},
     "Viteos SA": {2026: "https://www.viteos.ch/wp-content/tarifs/tarifs_electriques_2026.json", 2027: "https://www.viteos.ch/wp-content/tarifs/tarifs_electriques.json"},

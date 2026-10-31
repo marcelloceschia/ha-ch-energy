@@ -53,6 +53,12 @@ class Test2027Entries(unittest.TestCase):
             "Elektrizitäts- und Wasserwerk Windisch",
             "https://regionalwerke.ch/fileadmin/Strompreise_ElCom/Windisch_tariffs.json")
 
+    def test_waengi_2027(self):
+        self.assert_2027_entry(
+            "Technische Gemeindebetriebe Wängi",
+            "https://www.tbwaengi.ch/userdata/dateien/json_dateien/"
+            "preise-2027-tbwaengi-maschinenlesbar.json")
+
     def test_no_third_party_2027_urls(self):
         """Muhen, Würenlingen, Gossau etc. must stay out pending decision."""
         for key, source in CATALOG.items():
