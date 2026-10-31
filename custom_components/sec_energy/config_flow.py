@@ -79,16 +79,24 @@ def validate_schema(data):
                 if field not in tariff:
                     errors.append(f"Tarif {i}: Fehlendes Feld '{field}'")
             
+            tariff_type = tariff.get("tariffType")
             prices = tariff.get("prices", {})
             if not isinstance(prices, dict):
                 errors.append(f"Tarif {i}: prices muss ein Objekt sein")
             else:
-                if "base" not in prices:
-                    errors.append(f"Tarif {i}: prices.base fehlt")
-                if "energy" not in prices:
-                    errors.append(f"Tarif {i}: prices.energy fehlt")
-                elif not isinstance(prices.get("energy"), list):
-                    errors.append(f"Tarif {i}: prices.energy muss ein Array sein")
+                # Validierung je nach tariffType
+                if tariff_type in ("electricity", "grid"):
+                    if "energy" not in prices:
+                        errors.append(f"Tarif {i}: prices.energy fehlt für Typ '{tariff_type}'")
+                    elif not isinstance(prices.get("energy"), list):
+                        errors.append(f"Tarif {i}: prices.energy muss ein Array sein")
+                elif tariff_type == "metering":
+                    if "base" not in prices:
+                        errors.append(f"Tarif {i}: prices.base fehlt für Typ 'metering'")
+                elif tariff_type == "regional_fees":
+                    if "municipalityTaxes" not in prices:
+                        errors.append(f"Tarif {i}: prices.municipalityTaxes fehlt für Typ 'regional_fees'")
+                # Für andere Typen keine strikte Validierung der prices-Felder
     
     return errors
 
