@@ -8,7 +8,7 @@ from test_validate_schema import CONFIG_FLOW, FIXTURES, REPO_ROOT, validate_sche
 
 MUHEN_URL = (
     "https://www.muhen.ch/public/upload/assets/3522/"
-    "Tarife%20Elektrizit%C3%A4tswerk%20Muhen.json"
+    "Tarife_Elektrizit%C3%A4tswerk-Muhen_2026.json"
 )
 
 
@@ -43,7 +43,7 @@ class TestMuhen(unittest.TestCase):
                           and any(isinstance(t, ast.Name) and t.id == "PREDEFINED_DSOS"
                                   for t in node.targets))
         self.assertEqual(ast.literal_eval(assignment.value)["Elektrizitätswerk Muhen"],
-                         MUHEN_URL)
+                         {2026: MUHEN_URL})
 
     def test_schema_copies_describe_compatible_identifier(self):
         tree = ast.parse(CONFIG_FLOW.read_text())
