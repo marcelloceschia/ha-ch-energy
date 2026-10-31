@@ -9,6 +9,8 @@ from datetime import datetime, timedelta
 import logging
 
 from .const import DOMAIN
+from .tariffs import covers, select_tariff
+from homeassistant.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,6 +25,43 @@ PRICE_CATEGORIES = {
     "expensive": {"label": "Hochtarif"},
     "peak": {"label": "Spitzenpreis"},
 }
+
+
+def tariff_attributes(coordinator):
+    """Expose source and validity on every sensor, including aliases."""
+    data = coordinator.data or {}
+    attributes = {key: data.get(key) for key in
+                  ("data_expired", "valid_from", "valid_until", "resolved_url", "tariff_url")}
+    if not attributes["data_expired"]:
+        active = data.get("tariff") or {}
+        day = dt_util.now().date()
+        selected = select_tariff(data.get("raw", {}), active.get("tariffName"), day)
+        attributes["data_expired"] = not covers(selected or active, day)
+    return attributes
+
+
+def coordinator_price(coordinator, when, *, current=False):
+    """Freeze the last known current price when stale, never recalculate old tiers."""
+    data = coordinator.data or {}
+    if data.get("data_expired"):
+        return data.get("last_price")
+    tariff = data.get("tariff")
+    if not tariff:
+        return None
+    selected = select_tariff(data.get("raw", {}), tariff.get("tariffName"), when.date())
+    tariff = selected or tariff
+    if not covers(tariff, when.date()):
+        return data.get("last_price")
+    price = get_current_price(tariff, when)
+    if current:
+        coordinator.record_current_price(price)
+    return price
+
+
+class TariffDiagnostics:
+    @property
+    def extra_state_attributes(self):
+        return tariff_attributes(self.coordinator)
 
 
 def get_price_category(price, all_prices):
@@ -106,7 +145,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     async_add_entities(main_sensors + alias_sensors)
 
 
-class SECEnergyBaseSensor(CoordinatorEntity, SensorEntity):
+class SECEnergyBaseSensor(TariffDiagnostics, CoordinatorEntity, SensorEntity):
     def __init__(self, coordinator, entry):
         super().__init__(coordinator)
         self._entry = entry
@@ -149,7 +188,7 @@ class SECEnergyPriceSensor(SECEnergyBaseSensor):
         if not tariff:
             _LOGGER.warning("Kein Tarif in coordinator.data vorhanden")
             return None
-        price = get_current_price(tariff, datetime.now())
+        price = coordinator_price(self.coordinator, dt_util.now(), current=True)
         _LOGGER.debug("Aktueller Preis: %s CHF/kWh", price)
         return price
 
@@ -157,10 +196,11 @@ class SECEnergyPriceSensor(SECEnergyBaseSensor):
     def extra_state_attributes(self):
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
-            return {}
+            return tariff_attributes(self.coordinator)
         prices = tariff.get("prices", {})
         base = prices.get("base", {})
         return {
+            **tariff_attributes(self.coordinator),
             "tariff_name": tariff.get("tariffName"),
             "tariff_type": tariff.get("tariffType"),
             "base_price_monthly": base.get("price"),
@@ -185,7 +225,7 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
         if not tariff:
             _LOGGER.warning("Kein Tarif in coordinator.data vorhanden")
             return None
-        price = get_current_price(tariff, datetime.now())
+        price = coordinator_price(self.coordinator, dt_util.now(), current=True)
         _LOGGER.debug("Forecast aktueller Preis: %s CHF/kWh", price)
         _LOGGER.info("FORECAST_SENSOR: Tarif=%s, Preis=%s", tariff.get("tariffName", "unknown"), price)
         return price
@@ -196,19 +236,19 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
             _LOGGER.warning("Kein Tarif für Forecast vorhanden")
-            return {}
+            return tariff_attributes(self.coordinator)
         
         # Get all possible prices for category calculation
         all_prices = get_all_prices(tariff)
         
-        now = datetime.now()
+        now = dt_util.now()
         forecast = []
         for i in range(25):
             future = now + timedelta(hours=i)
             future_hour = future.replace(minute=0, second=0, microsecond=0)
             if future_hour < now.replace(minute=0, second=0, microsecond=0):
                 future_hour += timedelta(hours=1)
-            price = get_current_price(tariff, future_hour)
+            price = coordinator_price(self.coordinator, future_hour)
             category = get_price_category(price, all_prices)
             forecast.append({
                 "hour": future_hour.isoformat(),
@@ -220,7 +260,7 @@ class SECEnergyForecastSensor(SECEnergyBaseSensor):
             })
         
         _LOGGER.debug("Forecast generiert: %d Einträge", len(forecast))
-        return {"forecast": forecast}
+        return {**tariff_attributes(self.coordinator), "forecast": forecast}
 
 
 class SECEnergyBasePriceSensor(SECEnergyBaseSensor):
@@ -250,7 +290,7 @@ class SECEnergyBasePriceSensor(SECEnergyBaseSensor):
 # ALIAS SENSORS (short, generic names - for easy use in dashboards)
 # ============================================================================
 
-class SECEnergyTimeAwareAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyTimeAwareAlias(TariffDiagnostics, CoordinatorEntity, SensorEntity):
     """Base class for alias sensors that need updates at tariff boundaries.
 
     Automatically schedules state updates at the next tariff change time.
@@ -282,7 +322,7 @@ class SECEnergyTimeAwareAlias(CoordinatorEntity, SensorEntity):
         if not tariff:
             return
 
-        next_change = get_next_tariff_change(tariff, datetime.now())
+        next_change = get_next_tariff_change(tariff, dt_util.now())
         if next_change:
             _LOGGER.debug(
                 "%s: Next tariff change at %s",
@@ -331,7 +371,7 @@ class SECEnergyPriceAlias(SECEnergyTimeAwareAlias):
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
             return None
-        return get_current_price(tariff, datetime.now())
+        return coordinator_price(self.coordinator, dt_util.now(), current=True)
 
     @property
     def available(self):
@@ -360,25 +400,25 @@ class SECEnergyForecastAlias(SECEnergyTimeAwareAlias):
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
             return None
-        return get_current_price(tariff, datetime.now())
+        return coordinator_price(self.coordinator, dt_util.now(), current=True)
 
     @property
     def extra_state_attributes(self):
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
-            return {}
+            return tariff_attributes(self.coordinator)
         
         # Get all possible prices for category calculation
         all_prices = get_all_prices(tariff)
         
-        now = datetime.now()
+        now = dt_util.now()
         forecast = []
         for i in range(25):
             future = now + timedelta(hours=i)
             future_hour = future.replace(minute=0, second=0, microsecond=0)
             if future_hour < now.replace(minute=0, second=0, microsecond=0):
                 continue
-            price = get_current_price(tariff, future_hour)
+            price = coordinator_price(self.coordinator, future_hour)
             cat = get_price_category(price, all_prices)
             forecast.append({
                 "hour": future_hour.isoformat(),
@@ -387,14 +427,14 @@ class SECEnergyForecastAlias(SECEnergyTimeAwareAlias):
                 "label": cat["label"],
             })
         
-        return {"forecast": forecast}
+        return {**tariff_attributes(self.coordinator), "forecast": forecast}
 
     @property
     def available(self):
         return self.coordinator.last_update_success
 
 
-class SECEnergyBasePriceAlias(CoordinatorEntity, SensorEntity):
+class SECEnergyBasePriceAlias(TariffDiagnostics, CoordinatorEntity, SensorEntity):
     """Alias sensor: sensor.strompreis_grundgebuehr"""
     _sensor_type = "alias_base_price"
     _sensor_name = "Strompreis Grundgebühr"
@@ -451,8 +491,8 @@ class SECEnergyIsHighTariffAlias(SECEnergyTimeAwareAlias):
         if not tariff:
             return None
         
-        now = datetime.now()
-        current_price = get_current_price(tariff, now)
+        now = dt_util.now()
+        current_price = coordinator_price(self.coordinator, now, current=True)
         
         # Collect all unique prices from the tariff
         prices = tariff.get("prices", {})
@@ -502,8 +542,8 @@ class SECEnergyNextHourAlias(SECEnergyTimeAwareAlias):
         tariff = self.coordinator.data.get("tariff")
         if not tariff:
             return None
-        next_hour = datetime.now() + timedelta(hours=1)
-        return get_current_price(tariff, next_hour)
+        next_hour = dt_util.now() + timedelta(hours=1)
+        return coordinator_price(self.coordinator, next_hour)
 
     @property
     def available(self):
@@ -532,11 +572,11 @@ class SECEnergyLowestTodayAlias(SECEnergyTimeAwareAlias):
         if not tariff:
             return None
         
-        now = datetime.now()
+        now = dt_util.now()
         prices = []
         for hour in range(24):
             dt = now.replace(hour=hour, minute=0, second=0, microsecond=0)
-            prices.append(get_current_price(tariff, dt))
+            prices.append(coordinator_price(self.coordinator, dt))
         
         return min(prices) if prices else None
 
@@ -567,11 +607,11 @@ class SECEnergyHighestTodayAlias(SECEnergyTimeAwareAlias):
         if not tariff:
             return None
         
-        now = datetime.now()
+        now = dt_util.now()
         prices = []
         for hour in range(24):
             dt = now.replace(hour=hour, minute=0, second=0, microsecond=0)
-            prices.append(get_current_price(tariff, dt))
+            prices.append(coordinator_price(self.coordinator, dt))
         
         return max(prices) if prices else None
 
@@ -662,8 +702,8 @@ def get_next_tariff_change(tariff, now):
 
     # If no boundary found today, the next change is at midnight (00:00 tomorrow)
     if next_min is None:
-        next_change = datetime(now.year, now.month, now.day, 0, 0) + timedelta(days=1)
+        next_change = (now + timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
     else:
-        next_change = datetime(now.year, now.month, now.day, next_min // 60, next_min % 60)
+        next_change = now.replace(hour=next_min // 60, minute=next_min % 60, second=0, microsecond=0)
 
     return next_change
