@@ -5,6 +5,7 @@ import json
 from homeassistant import config_entries
 from homeassistant.core import callback
 from .const import DOMAIN
+from .tariff_document import parse_tariff_document
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -94,8 +95,10 @@ def validate_schema(data):
                     if "base" not in prices:
                         errors.append(f"Tarif {i}: prices.base fehlt für Typ 'metering'")
                 elif tariff_type == "regional_fees":
-                    if "municipalityTaxes" not in prices:
-                        errors.append(f"Tarif {i}: prices.municipalityTaxes fehlt für Typ 'regional_fees'")
+                    if not any(field in prices for field in ("municipalityTaxes", "cantonalTaxes")):
+                        errors.append(f"Tarif {i}: prices.municipalityTaxes oder prices.cantonalTaxes fehlt für Typ 'regional_fees'")
+                    if "cantonalTaxes" in prices and not isinstance(prices["cantonalTaxes"], list):
+                        errors.append(f"Tarif {i}: prices.cantonalTaxes muss ein Array sein")
                 # Für andere Typen keine strikte Validierung der prices-Felder
     
     return errors
@@ -168,7 +171,7 @@ PREDEFINED_DSOS = {
     "Groupe E": "https://www.groupe-e.ch/tarifs/tarifs.json",
     "IB Wohlen AG": "https://www.ibw.ag/mm/Tarife_IB_Wohlen_AG_2026.json",
     "IBB Strom AG": "https://www.ibbrugg.ch/hubfs/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250917_ibb_strompreise_2026.json",
-    "IWB": "https://www.iwb.ch/dam/jcr:4c273699-fbe7-4e2e-bdb4-cf908631dd1c/maschinell-lesbare-tarife-strom.json",
+    "IWB": "https://www.iwb.ch/dam/jcr:0e220410-b22a-4383-a29e-e32910532b53/maschinell-lesbare-tarife.json",
     "Industrielle Betriebe Interlaken AG": "https://www.ibi.ch/download/documents/2e/f3c23qsicm3k9idz2arnv0qoxxew05/20250825_tariffs.json",
     "Infrastruktur Zürichsee AG": "https://www.infra-z.ch/images/downloads/Tarife_Strom_maschinenlesbares_Format_2026.json",
     "Localnet AG": "https://www.localnet.ch/fileadmin/user_upload/Strom/Formulare_und_PDF/Maschinenlesbare_Information.json",
@@ -269,7 +272,7 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
                         async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
                             text = await response.text()
-                            data = json.loads(text)
+                            data = parse_tariff_document(text)
                             
                             # Schema-Validierung
                             schema_errors = validate_schema(data)
@@ -336,7 +339,7 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     text = await response.text()
                     _LOGGER.debug("Response Länge: %d chars", len(text))
                     _LOGGER.debug("Response Preview (first 500 chars): %s", text[:500])
-                    data = json.loads(text)
+                    data = parse_tariff_document(text)
                     _LOGGER.debug("JSON geparst. Keys: %s", list(data.keys()))
                     _LOGGER.debug("Anzahl Tarife: %d", len(data.get("tariffs", [])))
                     

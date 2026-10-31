@@ -8,6 +8,7 @@ import json
 
 from .const import DOMAIN, DEFAULT_SCAN_INTERVAL
 from .config_flow import validate_schema
+from .tariff_document import parse_tariff_document
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,7 +31,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
                 async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
                     text = await response.text()
-                    data = json.loads(text)
+                    data = parse_tariff_document(text)
                     
                     # Schema validation
                     schema_errors = validate_schema(data)
@@ -104,7 +105,7 @@ class SECEnergyCoordinator(DataUpdateCoordinator):
                     _LOGGER.debug("HTTP Status: %s", response.status)
                     text = await response.text()
                     _LOGGER.debug("Response Länge: %d chars", len(text))
-                    data = json.loads(text)
+                    data = parse_tariff_document(text)
                     _LOGGER.debug("JSON geparst. DSO: %s", data.get('dsoName'))
                     
             # Finde den gewählten Tarif
