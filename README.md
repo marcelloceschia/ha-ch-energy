@@ -79,17 +79,104 @@ der Map im Config Entry ein. Nicht zuordenbare eigene URLs bleiben unverändert.
 
 ## Installation
 
+### Vor einem Upgrade: vollständiges Backup erstellen
+
+> [!WARNING]
+> **Ein Versionswechsel in HACS setzt keine gespeicherten Daten zurück.**
+> Vor jedem Upgrade einer bestehenden Installation – insbesondere vor einer Beta –
+> ein vollständiges Home-Assistant-Backup erstellen und eine Kopie außerhalb des
+> HA-Systems sichern. Es muss den bisherigen Integrationscode unter
+> `custom_components/sec_energy`, die Konfiguration und den gesamten zugehörigen
+> `.storage`-Inhalt enthalten. Bei verschlüsselten Backups den zur Wiederherstellung
+> nötigen Schlüssel separat sicher aufbewahren. Ohne ein wiederherstellbares
+> Vor-Upgrade-Backup gibt es keinen zugesicherten Rückweg.
+
+**Config-Flow-Migration V1 → V2:** Der Release `v1.1.0` verwendet
+Config-Entry-Version 1. Der neuere Entwicklungsstand auf `main` verwendet Version 2:
+Beim Laden bestehender Einträge migriert `async_migrate_entry` diese dauerhaft und
+speichert zusätzlich `dso_key`, `resolved_url` und `valid_until`. Außerdem legt die
+Integration einen Tarif-Cache unter `.storage/sec_energy.<entry_id>.tariffs` an.
+**V1/V2 bezeichnet hier das Konfigurationsformat, nicht die Release-Version.**
+
+Für diese Config-Entry-/Storage-Änderungen gibt es **keine unterstützte
+Rückwärtsmigration**. Ein bloßer Dateidowngrade auf `v1.1.0` ist daher kein
+unterstützter Rollback. Auch das Abschalten von Beta-Updates macht die Migration
+nicht rückgängig. `.storage` nicht manuell bearbeiten und die Config-Entry-Version
+nicht zurücksetzen.
+
+Falls ein Rückweg nötig ist, das vollständige **Backup von vor dem Upgrade**
+wiederherstellen: Integrationscode, Konfiguration und Storage müssen zusammen den
+alten, konsistenten Stand ergeben. Änderungen seit diesem Backup gehen dabei
+verloren. Ein direkter Wechsel auf eine spätere Stable-Version ist nur dann ein
+zugesicherter Rückweg, wenn deren Config-Entry- und Storage-Kompatibilität für den
+konkreten Versionswechsel getestet und dokumentiert ist.
+
 ### HACS (empfohlen)
 
-1. HACS → Integrationen → Benutzerdefinierte Repositories
-2. URL: `https://github.com/marcelloceschia/ha-ch-energy`
-3. Kategorie: Integration
-4. Installieren → Neustart
+1. HACS in der Home-Assistant-Seitenleiste öffnen.
+2. Im HACS-Menü **⋮ → Benutzerdefinierte Repositories** öffnen.
+3. URL `https://github.com/marcelloceschia/ha-ch-energy` mit Kategorie
+   **Integration** hinzufügen.
+4. Das Repository **SEC Energy Swiss Tariffs** öffnen und den aktuellen
+   **Stable-Release** herunterladen. Für eine bestimmte Version siehe unten.
+5. Home Assistant neu starten; danach die Integration unter
+   **Einstellungen → Geräte & Dienste** hinzufügen bzw. die bestehende prüfen.
 
 ### Manuell
 
-1. Kopiere den `sec_energy` Ordner nach `<config>/custom_components/`
-2. Home Assistant neu starten
+1. Einen veröffentlichten [Release](https://github.com/marcelloceschia/ha-ch-energy/releases)
+   auswählen und dessen Quellcode herunterladen, nicht einen beliebigen `main`-Stand.
+2. Den Ordner `custom_components/sec_energy` aus diesem Release vollständig nach
+   `<config>/custom_components/sec_energy` kopieren; keine Dateien verschiedener
+   Versionen mischen. Bei einem Upgrade zuerst das oben beschriebene Backup erstellen.
+3. Home Assistant neu starten.
+
+## Versionen: Stable und Beta
+
+- **Stable** ist die Standardwahl für den produktiven Betrieb.
+- **Beta** ist eine ausdrücklich gewählte Vorabversion für Tests und kann Fehler
+  sowie dauerhafte Datenänderungen enthalten. Betas tragen das Schema
+  `vX.Y.Z-beta.N` und sind auf GitHub als **Pre-release** markiert; das Schema ist
+  kein Hinweis darauf, dass bereits eine Beta veröffentlicht wurde.
+- Stable und Beta sind alternative Versionen **derselben Integration** (`sec_energy`),
+  keine parallel installierbaren Integrationen. Es gibt keinen Versionsschalter im
+  SEC-Energy-Konfigurationsdialog.
+
+### Eine bestimmte Version mit HACS auswählen
+
+Die Auswahl erfolgt im **HACS-Repository**, nicht auf der normalen HA-Updatekarte:
+
+1. HACS in der Seitenleiste öffnen und das Repository auswählen.
+2. **⋮ → Redownload → Need a different version?** öffnen.
+3. Unter **Release** die gewünschte veröffentlichte Version auswählen.
+4. Mit **Download** herunterladen und Home Assistant neu starten.
+5. Die heruntergeladene Version in HACS und bei Bedarf den `version`-Wert in
+   `<config>/custom_components/sec_energy/manifest.json` prüfen; anschließend
+   Integration und Protokoll auf Fehler prüfen.
+
+Die Beschriftungen können je nach HACS-Version und Sprache abweichen. Siehe die
+[HACS-Anleitung zur Versionsauswahl](https://www.hacs.xyz/docs/use/repositories/dashboard/#downloading-a-specific-version-of-a-repository).
+Die Liste kann veröffentlichte Stable- und Pre-releases enthalten; eine Beta wird
+bewusst über ihren Release-Namen gewählt, nicht über eine zusätzliche Checkbox im
+Redownload-Dialog. Fehlt die gewünschte Version, im Repository-Menü zunächst
+**Update information** ausführen. Nicht veröffentlichte Versionen erscheinen nicht
+in der Release-Liste. Stand 31.10.2026 ist nur `v1.1.0` veröffentlicht, keine Beta.
+
+### Beta-Auswahl und spätere Updates
+
+Die einmalige Auswahl einer Beta im Redownload-Dialog und der laufende
+Pre-release-Updatekanal sind getrennte HACS-Funktionen. HACS stellt dafür eine
+eigene **Pre-release-Schalter-Entität** bereit; deren genaue Bezeichnung und
+Bedienung hängen von der installierten HACS-Version ab. Die Entität kann zunächst
+in der Entitätsverwaltung deaktiviert sein und muss dann dort erst aktiviert
+werden. Ohne ausdrückliches Opt-in ist dieser Kanal standardmäßig ausgeschaltet.
+Wer weitere Beta-Updates möchte, muss den HACS-Pre-release-Kanal bewusst einschalten.
+
+Zum Beenden der Beta-Updates diesen Kanal deaktivieren. Das installiert weder
+automatisch Stable noch ältere Daten. Vor einem Wechsel auf Stable zuerst die
+[Backup- und Rollback-Warnung](#vor-einem-upgrade-vollständiges-backup-erstellen)
+beachten; ein niedrigerer Release in der HACS-Liste ist keine Zusage für einen
+sicheren Downgrade.
 
 ## Konfiguration
 
