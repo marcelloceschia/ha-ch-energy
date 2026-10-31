@@ -28,7 +28,11 @@ SEC_ENERGY_SCHEMA = {
     "required": ["dsoName", "dsoNumber", "tariffs"],
     "properties": {
         "dsoName": {"type": "string"},
-        "dsoNumber": {"type": "integer"},
+        # Official schema uses integer; some DSOs publish the 11-digit ID as text.
+        "dsoNumber": {"anyOf": [
+            {"type": "integer"},
+            {"type": "string", "pattern": "^[0-9]{11}$", "maxLength": 11},
+        ]},
         "tariffs": {
             "type": "array",
             "minItems": 1,
@@ -82,8 +86,18 @@ def validate_schema(data):
     if not isinstance(data.get("dsoName"), str):
         errors.append("dsoName muss ein String sein")
     
-    if not isinstance(data.get("dsoNumber"), int):
-        errors.append("dsoNumber muss eine Ganzzahl sein")
+    dso_number = data.get("dsoNumber")
+    # Do not coerce arbitrary values or accept bool (a Python int subclass).
+    if not (
+        type(dso_number) is int
+        or (
+            isinstance(dso_number, str)
+            and len(dso_number) == 11
+            and dso_number.isascii()
+            and dso_number.isdecimal()
+        )
+    ):
+        errors.append("dsoNumber muss eine Ganzzahl oder ein String aus 11 ASCII-Ziffern sein")
     
     tariffs = data.get("tariffs", [])
     if not isinstance(tariffs, list) or len(tariffs) == 0:

@@ -1,0 +1,1989 @@
+{
+  "dsoName": "Elektrizitätswerk Muhen",
+  "dsoNumber": "10013012345",
+  "tariffs": [
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "G (E)",
+      "tariffType": "electricity",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 2.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1115000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1115000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1115000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1115000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1075000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "E-Wahl (E)",
+      "tariffType": "electricity",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 2.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1100000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "G (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 7.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1068000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1303000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1303000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1303000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1303000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 9.5000000000,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0500000000,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4009,
+            "municipalityName": "Muhen",
+            "municipalityEnergy": [],
+            "municipalityComment": "KA"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "E-Wahl (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 4.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1703000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0500000000,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4009,
+            "municipalityName": "Muhen",
+            "municipalityEnergy": [],
+            "municipalityComment": "KA"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "H-Basis (E)",
+      "tariffType": "electricity",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 2.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1125000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.1125000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1125000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.1125000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1085000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "H-Basis (N) ",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 4.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.2033000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.2033000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "07:00",
+            "to": "12:00",
+            "price": 0.2033000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "17:00",
+            "to": "22:00",
+            "price": 0.2033000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "00:00",
+            "to": "07:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "12:00",
+            "to": "17:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "22:00",
+            "to": "00:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "months": [
+              "Oct",
+              "Nov",
+              "Dec",
+              "Jan",
+              "Feb",
+              "Mar"
+            ],
+            "weekdays": [
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1498000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "So"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0500000000,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4009,
+            "municipalityName": "Muhen",
+            "municipalityEnergy": [],
+            "municipalityComment": "KA"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Niederspannung Direkt",
+      "tariffType": "metering",
+      "tariffForm": "constant",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 7.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Niederspannung Wandler",
+      "tariffType": "metering",
+      "tariffForm": "constant",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 14.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Niederspannung mit VMP",
+      "tariffType": "metering",
+      "tariffForm": "constant",
+      "startDate": "2026-01-01T00:00:00",
+      "endDate": "2026-12-31T00:00:00",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 3.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    }
+  ]
+}
