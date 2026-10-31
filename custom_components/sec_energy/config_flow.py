@@ -13,7 +13,11 @@ SEC_ENERGY_SCHEMA = {
     "required": ["dsoName", "dsoNumber", "tariffs"],
     "properties": {
         "dsoName": {"type": "string"},
-        "dsoNumber": {"type": "integer"},
+        # Official schema uses integer; some DSOs publish the 11-digit ID as text.
+        "dsoNumber": {"anyOf": [
+            {"type": "integer"},
+            {"type": "string", "pattern": "^[0-9]{11}$", "maxLength": 11},
+        ]},
         "tariffs": {
             "type": "array",
             "minItems": 1,
@@ -67,8 +71,18 @@ def validate_schema(data):
     if not isinstance(data.get("dsoName"), str):
         errors.append("dsoName muss ein String sein")
     
-    if not isinstance(data.get("dsoNumber"), int):
-        errors.append("dsoNumber muss eine Ganzzahl sein")
+    dso_number = data.get("dsoNumber")
+    # Do not coerce arbitrary values or accept bool (a Python int subclass).
+    if not (
+        type(dso_number) is int
+        or (
+            isinstance(dso_number, str)
+            and len(dso_number) == 11
+            and dso_number.isascii()
+            and dso_number.isdecimal()
+        )
+    ):
+        errors.append("dsoNumber muss eine Ganzzahl oder ein String aus 11 ASCII-Ziffern sein")
     
     tariffs = data.get("tariffs", [])
     if not isinstance(tariffs, list) or len(tariffs) == 0:
@@ -144,7 +158,7 @@ PREDEFINED_DSOS = {
     "Elektrizitätsversorgung Villigen (EVV)": "https://25304444.fs1.hubspotusercontent-eu1.net/hubfs/25304444/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250827_evvilligen_strompreise_2026.json",
     "Elektrizitätsversorgung Zeihen (EVZ)": "https://energieverbrauch.ch/download/Tarife/Tarife_Elektrizit%C3%A4tsversorgung-Zeihen_2026.json",
     "Elektrizitätswerk Jona-Rapperswil AG": "https://ewjr.ch/images/json/20250825_tariffs_EWJR.json",
-    "Elektrizitätswerk Muhen": "https://www.muhen.ch/public/upload/assets/3522/Tarife_Elektrizit%C3%A4tswerk-Muhen_2026.json",
+    "Elektrizitätswerk Muhen": "https://www.muhen.ch/public/upload/assets/3522/Tarife%20Elektrizit%C3%A4tswerk%20Muhen.json",
     "Elektrizitätswerk Rümlang Genossenschaft": "https://www.ewruemlang.ch/uploads/files/Dokumente/ELCOM_Upload/2026-Maschinenlesbare-EWR-Tarife.json",
     "Elektrizitätswerk Sennwald": "https://www.ewsennwald.ch/fileadmin/user_upload/EW_Sennwald_Tarife_2026.json",
     "Energie Gossau AG": "https://energiegossau.ch/site/assets/files/1029/tarife_energie_gossau_ag_2026.json",
