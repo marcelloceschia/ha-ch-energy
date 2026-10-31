@@ -5,6 +5,21 @@ import json
 from homeassistant import config_entries
 from homeassistant.core import callback
 from .const import DOMAIN
+from .tariffs import resolve_document, covers, select_tariff
+from homeassistant.util import dt as dt_util
+
+
+async def fetch_document(url):
+    """Fetch JSON with status checks; normalize transport errors for fallback."""
+    try:
+        async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+                if response.status != 200:
+                    raise OSError(f"HTTP {response.status}")
+                return json.loads(await response.text())
+    except aiohttp.ClientError as err:
+        raise OSError(str(err)) from err
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -167,7 +182,7 @@ PREDEFINED_DSOS = {
     "Genossenschaft Energie Fischingen": "https://energie-fischingen.ch/wp-content/uploads/Tarife_EnergieFischingen_2026.json",
     "Groupe E": "https://www.groupe-e.ch/tarifs/tarifs.json",
     "IB Wohlen AG": "https://www.ibw.ag/mm/Tarife_IB_Wohlen_AG_2026.json",
-    "IBB Strom AG": "https://www.ibbrugg.ch/hubfs/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250917_ibb_strompreise_2026.json",
+    "IBB Strom AG": {2026: "https://www.ibbrugg.ch/hubfs/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250917_ibb_strompreise_2026.json"},
     "IWB": "https://www.iwb.ch/dam/jcr:4c273699-fbe7-4e2e-bdb4-cf908631dd1c/maschinell-lesbare-tarife-strom.json",
     "Industrielle Betriebe Interlaken AG": "https://www.ibi.ch/download/documents/2e/f3c23qsicm3k9idz2arnv0qoxxew05/20250825_tariffs.json",
     "Infrastruktur Zürichsee AG": "https://www.infra-z.ch/images/downloads/Tarife_Strom_maschinenlesbares_Format_2026.json",
@@ -183,7 +198,7 @@ PREDEFINED_DSOS = {
     "St. Gallisch-Appenzellische Kraftwerke AG": "https://www.sak.ch/downloads/strom/strompreise/sak-tarife-2026.json",
     "Stadtwerke Wetzikon": "https://sec-energy.ch/tarifdaten/wetzikon/Tarifdaten_2026_Stadtwerke_Wetzikon.json",
     "Technische Betriebe Birmenstorf": "https://energieverbrauch.ch/download/Tarife/Technische_Betriebe_Birmenstorf_2026.json",
-    "Technische Betriebe Flawil (TBF)": "https://www.tbflawil.ch/tarifkommunikation/2026_tariffs.json",
+    "Technische Betriebe Flawil (TBF)": "https://www.tbflawil.ch/tarifkommunikation/{year}_tariffs.json",
     "Technische Betriebe Glarus Nord (TBGN)": "https://www.tbgn.ch/images/T2026/TBGN-Strom-Tarife-2026.json",
     "Technische Betriebe Oberentfelden": "https://www.oberentfelden.ch/sites/default/files/2025-08/Tarife_Technische_Betriebe_Oberentfelden_2026.json",
     "Technische Betriebe Weinfelden AG": "https://tbweinfelden.ch/stromtarife/stromtarife-2026.json",
@@ -218,7 +233,7 @@ class SECEnergyOptionsFlow(config_entries.OptionsFlow):
 
 @config_entries.HANDLERS.register(DOMAIN)
 class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    VERSION = 1
+    VERSION = 2
 
     @staticmethod
     @callback
@@ -238,7 +253,7 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             
             # Vordefinierter DSO
             self.context["dso_name"] = dso_selection
-            self.context["dso_url"] = PREDEFINED_DSOS[dso_selection]
+            self.context["dso_key"] = dso_selection
             return await self.async_step_tariff()
         
         return self.async_show_form(
@@ -312,12 +327,19 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         
         if user_input is not None:
             _LOGGER.debug("Tarif gewählt: %s", user_input)
-            # Tarif wurde gewählt, erstelle den Eintrag
+            # Persist validity of the selected tariff, not an unrelated entry.
+            selected = select_tariff(self.context.get("document", {}), user_input["tariff"], dt_util.now().date())
+            if selected is None:
+                return self.async_abort(reason="no_tariffs")
+            self.context["valid_until"] = selected.get("endDate")
             return self.async_create_entry(
                 title=user_input.get("name", dso_name),
                 data={
                     "name": user_input.get("name", dso_name),
-                    "dso_url": dso_url,
+                    "dso_url": self.context.get("resolved_url") or dso_url,
+                    "dso_key": self.context.get("dso_key"),
+                    "resolved_url": self.context.get("resolved_url") or dso_url,
+                    "valid_until": self.context.get("valid_until"),
                     "dso_name": dso_name,
                     "tariff": user_input["tariff"],
                     "scan_interval": user_input.get("scan_interval", 86400),
@@ -328,19 +350,16 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         tariff_choices = {}
         text = None
         try:
-            import json
-            _LOGGER.debug("Lade Tarife von URL: %s", dso_url)
-            async with aiohttp.ClientSession(headers={"User-Agent": "HomeAssistant-SEC-Energy/1.0"}) as session:
-                async with session.get(dso_url, timeout=aiohttp.ClientTimeout(total=30)) as response:
-                    _LOGGER.debug("HTTP Status: %s, Content-Type: %s", response.status, response.headers.get('content-type'))
-                    text = await response.text()
-                    _LOGGER.debug("Response Länge: %d chars", len(text))
-                    _LOGGER.debug("Response Preview (first 500 chars): %s", text[:500])
-                    data = json.loads(text)
-                    _LOGGER.debug("JSON geparst. Keys: %s", list(data.keys()))
-                    _LOGGER.debug("Anzahl Tarife: %d", len(data.get("tariffs", [])))
-                    
+            source = PREDEFINED_DSOS.get(self.context.get("dso_key"), dso_url)
+            day = dt_util.now().date()
+            resolved_url, data = await resolve_document(source, day, fetch_document, validate_schema)
+            self.context["resolved_url"] = resolved_url
+            self.context["document"] = data
+            self.context["valid_until"] = None
+
             for t in data.get("tariffs", []):
+                if not covers(t, day):
+                    continue
                 name = t.get("tariffName", "Unknown")
                 t_type = t.get("tariffType", "")
                 t_form = t.get("tariffForm", "")

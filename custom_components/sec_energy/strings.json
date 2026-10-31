@@ -32,6 +32,15 @@
       "no_tariffs": "No tariffs found",
       "invalid_url": "Invalid URL",
       "required": "Required"
+    },
+    "abort": {
+      "no_tariffs": "No currently valid tariff is available. Please try again after the tariff source has been updated."
+    }
+  },
+  "issues": {
+    "tariff_expired": {
+      "title": "Tariff data unavailable or expired",
+      "description": "No current tariff is available for {dso} (last validity: {valid_until}). The last known price is retained and marked expired. Check the tariff source or update the integration."
     }
   }
 }

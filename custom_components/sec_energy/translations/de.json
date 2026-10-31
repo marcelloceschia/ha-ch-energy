@@ -33,7 +33,8 @@
       "required": "Dieses Feld ist erforderlich."
     },
     "abort": {
-      "already_configured": "Dieser Stromversorger ist bereits konfiguriert."
+      "already_configured": "Dieser Stromversorger ist bereits konfiguriert.",
+      "no_tariffs": "Kein aktuell gültiger Tarif verfügbar. Bitte nach Aktualisierung der Tarifquelle erneut versuchen."
     }
   },
   "options": {
@@ -45,6 +46,12 @@
           "scan_interval": "Aktualisierungsintervall (Sekunden)"
         }
       }
+    }
+  },
+  "issues": {
+    "tariff_expired": {
+      "title": "Tarifdaten nicht verfügbar oder abgelaufen",
+      "description": "Für {dso} sind keine aktuellen Tarifdaten verfügbar (letzte Gültigkeit: {valid_until}). Der letzte bekannte Preis bleibt sichtbar und wird als abgelaufen markiert. Prüfe die Tarifquelle oder aktualisiere die Integration."
     }
   }
 }
