@@ -152,7 +152,7 @@ PREDEFINED_DSOS = {
     "Energie Kreuzlingen": "https://energiekreuzlingen.ch/maschinenlesbar_mitteilung_tarifaenderungen_2026_energie_kreuzlingen.json",
     "Energie Münchenbuchsee AG": "https://www.energiebuchsi.ch/de/angebot/strom/20250811-tariffs.json",
     "Energie Thun AG": "https://energiethun.ch/app/uploads/2025/08/Tarife-Energie-Thun-AG-2026.json",
-    "Energie Wettingen AG": "https://www.energiewettingen.ch/api/rm/82F24B75YCP3U59/20250814-enw-2026-tariffs.json",
+    "Energie Wettingen AG": "https://www.energiewettingen.ch/upload/rm/20/26/20260824-enw-2027-tariffs-1.json",
     "Eniwa AG": "https://cms.eniwa.ch/assets/files/Downloads/Sonstiges/2026_Eniwa_tariffs.json",
     "Gemeinde Würenlingen Technische Werke": "https://www.wuerenlingen.ch/fileadmin/Tarife_Gemeinde_Wuerenlingen_Technische_Werke_2026.json",
     "Gemeindewerke Erstfeld": "https://www.gemeindewerke-erstfeld.ch/wp-content/uploads/2025/08/2026-Stromtarife-GWE-MRD.json",
