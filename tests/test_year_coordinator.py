@@ -28,13 +28,13 @@ def load_code():
                      dt_util=SimpleNamespace(now=lambda: datetime(2026, 12, 31, 12)),
                      ir=SimpleNamespace(async_create_issue=Mock(), async_delete_issue=Mock(),
                                         IssueSeverity=SimpleNamespace(WARNING='warning')),
-                     Store=Mock(return_value=SimpleNamespace(async_load=AsyncMock(return_value=None), async_save=AsyncMock())),
+                     Store=Mock(return_value=SimpleNamespace(async_load=AsyncMock(return_value=None), async_save=AsyncMock(), async_delay_save=Mock())),
                      validate_schema=validate_schema, json=json, aiohttp=SimpleNamespace(ClientError=ConnectionError),
                      ConfigEntry=object, HomeAssistant=object)
     namespace.update({name: getattr(tariffs, name) for name in ['select_tariff', 'covers', 'resolve_document', 'match_dso']})
     price_tree = ast.parse((ROOT / 'sensor.py').read_text())
     price_nodes = [n for n in price_tree.body if isinstance(n, (ast.FunctionDef, ast.Assign)) and
-                   (isinstance(n, ast.FunctionDef) and n.name in ('get_current_price', 'time_in_range') or
+                   (isinstance(n, ast.FunctionDef) and n.name in ('get_current_price', 'time_in_range', 'coordinator_price') or
                     isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id in ('WEEKDAY_MAP', 'MONTH_MAP') for t in n.targets))]
     exec(compile(ast.Module(body=price_nodes, type_ignores=[]), str(ROOT / 'sensor.py'), 'exec'), namespace)
     tree = ast.parse((ROOT / '__init__.py').read_text())
@@ -56,6 +56,39 @@ class CoordinatorTests(unittest.IsolatedAsyncioTestCase):
         self.coordinator = self.ns['SECEnergyCoordinator'](self.hass, self.entry)
         self.coordinator._fetch_document = AsyncMock(return_value={
             'dsoName': 'Test', 'dsoNumber': 1, 'tariffs': [tariff(2026)]})
+
+    async def test_visible_evening_price_survives_expiry_and_restart(self):
+        item = tariff(2026)
+        item['prices']['energy'] = [
+            {'price': price, 'months': ['Dec'], 'weekdays': ['Th'],
+             'from': start, 'to': end}
+            for price, start, end in [(20, '00:00', '18:00'), (30, '18:00', '00:00')]]
+        self.coordinator._fetch_document.return_value['tariffs'] = [item]
+        self.coordinator.data = await self.coordinator._async_update_data()
+        self.assertEqual(self.ns['coordinator_price'](self.coordinator, self.ns['dt_util'].now()), 20)
+        # Exercise the actual current sensor property, not a synthetic price helper.
+        tree = ast.parse((ROOT / 'sensor.py').read_text())
+        cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'SECEnergyPriceSensor')
+        getter = next(n for n in cls.body if isinstance(n, ast.FunctionDef) and n.name == 'native_value')
+        getter.decorator_list = []
+        exec(compile(ast.Module(body=[getter], type_ignores=[]), '<sensor>', 'exec'), self.ns)
+        self.ns['dt_util'].now = lambda: datetime(2026, 12, 31, 23)
+        self.assertEqual(self.ns['native_value'](SimpleNamespace(coordinator=self.coordinator)), 30)
+        # Forecast of the cheaper period must not overwrite the observed evening price.
+        self.assertEqual(self.ns['coordinator_price'](self.coordinator, datetime(2026, 12, 31, 12)), 20)
+        self.assertEqual(self.coordinator.data['last_price'], 30)
+        # Flush HA Store's deferred save, then simulate restart after expiry.
+        self.coordinator._store.async_delay_save.assert_called()
+        saved = json.loads(json.dumps(self.coordinator._store.async_delay_save.call_args.args[0]()))
+        self.ns['Store'].return_value.async_load.return_value = saved
+        self.ns['dt_util'].now = lambda: datetime(2027, 1, 1)
+        self.coordinator._fetch_document.side_effect = OSError('offline')
+        after = await self.coordinator._async_update_data()
+        self.assertTrue(after['data_expired'])
+        self.assertEqual(after['last_price'], 30)
+        restarted = self.ns['SECEnergyCoordinator'](self.hass, self.entry)
+        restarted._fetch_document = AsyncMock(side_effect=OSError('offline'))
+        self.assertEqual((await restarted._async_update_data())['last_price'], 30)
 
     async def test_cached_new_year_price_is_used_even_when_offline(self):
         self.coordinator._fetch_document.return_value['tariffs'].append(tariff(2027, 30))

@@ -118,6 +118,16 @@ class SECEnergyCoordinator(DataUpdateCoordinator):
             update_interval=timedelta(seconds=entry.data.get("scan_interval", DEFAULT_SCAN_INTERVAL)),
         )
 
+    def record_current_price(self, price):
+        """Persist observed current prices; forecast queries never call this."""
+        if price is None or self.data is None or self.data.get("last_price") == price:
+            return
+        self.data["last_price"] = price
+        if self._cache is not None:
+            self._cache["last_price"] = price
+            # HA Store coalesces same-loop reads and flushes pending writes on shutdown.
+            self._store.async_delay_save(lambda: dict(self._cache or {}), 0)
+
     async def _fetch_document(self, url):
         return await fetch_document(url)
 
