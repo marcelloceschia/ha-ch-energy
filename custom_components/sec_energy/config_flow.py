@@ -183,6 +183,7 @@ PREDEFINED_DSOS = {
     "St. Gallisch-Appenzellische Kraftwerke AG": "https://www.sak.ch/downloads/strom/strompreise/sak-tarife-2026.json",
     "Stadtwerke Wetzikon": "https://sec-energy.ch/tarifdaten/wetzikon/Tarifdaten_2026_Stadtwerke_Wetzikon.json",
     "Technische Betriebe Birmenstorf": "https://energieverbrauch.ch/download/Tarife/Technische_Betriebe_Birmenstorf_2026.json",
+    "Technische Betriebe Flawil (TBF)": "https://www.tbflawil.ch/tarifkommunikation/2026_tariffs.json",
     "Technische Betriebe Glarus Nord (TBGN)": "https://www.tbgn.ch/images/T2026/TBGN-Strom-Tarife-2026.json",
     "Technische Betriebe Oberentfelden": "https://www.oberentfelden.ch/sites/default/files/2025-08/Tarife_Technische_Betriebe_Oberentfelden_2026.json",
     "Technische Betriebe Weinfelden AG": "https://tbweinfelden.ch/stromtarife/stromtarife-2026.json",
