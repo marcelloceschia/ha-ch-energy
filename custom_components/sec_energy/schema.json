@@ -11,8 +11,11 @@
       "description": "Name of the distribution system operator"
     },
     "dsoNumber": {
-      "type": "integer",
-      "description": "Unique identifier for the DSO"
+      "anyOf": [
+        {"type": "integer"},
+        {"type": "string", "pattern": "^[0-9]{11}$", "maxLength": 11}
+      ],
+      "description": "Unique identifier for the DSO; accepts 11-digit ASCII strings for compatibility with published DSO files"
     },
     "tariffs": {
       "type": "array",
