@@ -1,0 +1,874 @@
+{
+  "dsoName": "Elektra Sins",
+  "dsoNumber": "10346012345",
+  "tariffs": [
+    {
+      "customerVoltageLevel": 5,
+      "tariffName": "GHS Gewerbe (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0583000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 8.7000000000,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4239,
+            "municipalityName": "Sins",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0038000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessions-Abgabe"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "GNS Gewerbe (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0603000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 9.0000000000,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4239,
+            "municipalityName": "Sins",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0038000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessions-Abgabe"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "HN Haushalt (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 7.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0753000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4239,
+            "municipalityName": "Sins",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0038000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessions-Abgabe"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Niederspannung Direkt",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 6.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Niederspannung Wandler",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 10.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Virtuell",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 2.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 5,
+      "tariffName": "Messung Mittelspannung Wandler",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 39.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "tariffName": "Sins Wasser (E)",
+      "tariffType": "electricity",
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1150000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "tariffName": "Sins Sonne (E)",
+      "tariffType": "electricity",
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1350000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "tariffName": "Sins Regenbogen (E)",
+      "tariffType": "electricity",
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1190000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 5,
+      "tariffName": "GHS Gewerbe (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0550000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 10.0000000000,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4239,
+            "municipalityName": "Sins",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0038000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessions-Abgabe"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "GNS Gewerbe (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0570000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 10.3000000000,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4239,
+            "municipalityName": "Sins",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0038000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessions-Abgabe"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "HN Haushalt (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 7.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0770000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4239,
+            "municipalityName": "Sins",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0038000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessions-Abgabe"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Niederspannung Direkt",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 6.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Niederspannung Wandler",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 10.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Messung Virtuell",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 2.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 5,
+      "tariffName": "Messung Mittelspannung Wandler",
+      "tariffType": "metering",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 39.0000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "tariffName": "Sins Wasser (E)",
+      "tariffType": "electricity",
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1020000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "tariffName": "Sins Sonne (E)",
+      "tariffType": "electricity",
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "---",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1220000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "tariffName": "Sins Regenbogen (E)",
+      "tariffType": "electricity",
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1060000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    }
+  ]
+}

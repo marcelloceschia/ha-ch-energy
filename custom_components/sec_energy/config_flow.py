@@ -156,7 +156,7 @@ PREDEFINED_DSOS = {
     "Elektra Mettauertal und Umgebung": {2026: "https://www.emu-hottwil.ch/_docn/166696/20250827_tariffs.json", 2027: "https://www.emu-hottwil.ch/_docn/181720/20260824_tariffs.json"},
     "Elektra Remetschwil": {2026: "https://elektra-remetschwil.ch/view/data/9595/Tarife_Elektra_Remetschwil_2026.json"},
     "Elektra Rüthi (SG)": {2026: "https://ruethi.ch/wp-content/uploads/2023/11/Tarife-Ruethi-2026.json", 2027: "https://ruethi.ch/wp-content/uploads/2026/08/Tarife-Ruethi-2026-2027.json"},
-    "Elektra Sins": {2026: "https://www.elektra-sins.ch/wp-content/uploads/2025/08/Tarife_Elektra_Sins_2026.json"},
+    "Elektra Sins": {2026: "https://strompreisvergleich.ch/tarife/data/10346012345/tarife.json", 2027: "https://strompreisvergleich.ch/tarife/data/10346012345/tarife.json"},
     "Elektra Sissach": {2026: "https://www.elektra-sissach.ch/fileadmin/user_upload/Elektra/maschinenlesbare_Tarife/Tarife_Elektra-Sissach_2026.json"},
     "Elektra-Genossenschaft Siglistorf-Siglistorf-Wislikofen": {2026: "http://www.egswm.ch/userfiles/file/20250804_tariffs.json", 2027: "https://www.egswm.ch/userfiles/file/Tarife_EGSWM_(VNB)_2026-2027.json"},
     "Elektra-Korporation Wolfhalden EKW": {2026: "https://ekw.ch/wp-content/uploads/2025/08/20250831_EKw_-Tarife_-2026.json", 2027: "https://ekw.ch/wp-content/uploads/2026/08/20260831_EKw-Tarife_2027.json"},
