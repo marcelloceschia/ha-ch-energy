@@ -66,6 +66,37 @@ class MuhenRuntimeTests(unittest.IsolatedAsyncioTestCase):
                         await tariffs.resolve_document({2026: MUHEN_URL}, date(2026, 11, 1),
                                                       fetch, validate_schema)
 
+    async def test_week_date_timestamps_rejected_on_both_boundaries(self):
+        for boundary, value in (
+            ('startDate', '2026-W01-1T00:00:00'),
+            ('endDate', '2026-W53-7T00:00:00'),
+        ):
+            with self.subTest(boundary=boundary):
+                document = copy.deepcopy(self.document)
+                for entry in document['tariffs']:
+                    entry[boundary] = value
+                day = date(2026, 11, 1)
+                for entry in document['tariffs']:
+                    self.assertFalse(tariffs.covers(entry, day))
+                    self.assertIsNone(tariffs.select_tariff(
+                        document, entry['tariffName'], day))
+                async def fetch(url):
+                    return document
+                with self.assertRaises(ValueError):
+                    await tariffs.resolve_document(
+                        {2026: MUHEN_URL}, day, fetch, validate_schema)
+
+    def test_merged_main_boundary_forms_preserved(self):
+        for boundary in ('startDate', 'endDate'):
+            for value in ('2026-06-15', '20260615', '2026-W25-1',
+                          '2026-06-15T00:00:00', '2026-06-15T00:00:00.000000',
+                          None, ''):
+                with self.subTest(boundary=boundary, value=value):
+                    self.assertTrue(tariffs.covers({boundary: value}, date(2026, 6, 15)))
+            for value in (False, 0, '２０２６-06-15T00:00:00'):
+                with self.subTest(boundary=boundary, invalid=value):
+                    self.assertFalse(tariffs.covers({boundary: value}, date(2026, 6, 15)))
+
     async def test_schema_and_selected_name_still_enforced(self):
         for validate, name in ((lambda doc: ['invalid'], None),
                                (validate_schema, 'not a Muhen tariff')):
