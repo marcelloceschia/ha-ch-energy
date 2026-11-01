@@ -1,0 +1,2 @@
+# Preserve downloaded evidence byte-for-byte, including original CRLF/spaces.
+* -text -whitespace
