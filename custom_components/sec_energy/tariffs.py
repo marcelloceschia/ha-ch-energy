@@ -1,6 +1,7 @@
 """Date-aware tariff selection and Jahres-Map resolution (HA-independent)."""
-from datetime import date
+from datetime import date, datetime, time
 import logging
+import re
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -58,11 +59,32 @@ async def resolve_document(source, day, fetch, validate, name=None):
     raise ValueError('No valid tariff source available')
 
 
+def _boundary_date(value, default):
+    """Accept calendar dates or naive ISO midnight, never truncate arbitrary text.
+
+    Boundaries describe inclusive local calendar days, not instants. Offset-aware
+    or non-midnight datetimes are deliberately unsupported to avoid shifting days.
+    """
+    if value is None or value == "":
+        return default
+    if not isinstance(value, str):
+        raise ValueError("Invalid tariff date")
+    try:
+        return date.fromisoformat(value)
+    except ValueError:
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T00:00:00(?:\.0{1,6})?", value):
+            raise ValueError("Expected date or naive midnight datetime") from None
+        parsed = datetime.fromisoformat(value)
+        if parsed.time() != time.min:
+            raise ValueError("Expected midnight")
+        return parsed.date()
+
+
 def covers(tariff, day):
     """Missing boundaries are open; malformed boundaries are never current."""
     try:
-        start = date.fromisoformat(tariff["startDate"]) if tariff.get("startDate") else date.min
-        end = date.fromisoformat(tariff["endDate"]) if tariff.get("endDate") else date.max
+        start = _boundary_date(tariff.get("startDate"), date.min)
+        end = _boundary_date(tariff.get("endDate"), date.max)
         return start <= day <= end
     except (TypeError, ValueError):
         return False
