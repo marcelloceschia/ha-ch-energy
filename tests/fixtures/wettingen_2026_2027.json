@@ -1,0 +1,612 @@
+{
+  "dsoName": "Energie Wettingen AG",
+  "dsoNumber": 10786012345,
+  "tariffs": [
+    {
+      "tariffName": "2026 Basic Energie \"wasserstrom\"",
+      "tariffType": "electricity",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Privat- und Gewerbekunden, Niederspannung mit einem Jahresverbrauch bis 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.103,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "2026 Basic Netznutzung",
+      "tariffType": "grid",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Privat- und Gewerbekunden, Niederspannung mit einem Jahresverbrauch bis 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 5.2,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.088,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.038,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        }
+      }
+    },
+    {
+      "tariffName": "2026 Basic Messtarif",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Privat- und Gewerbekunden, Niederspannung mit einem Jahresverbrauch bis 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 6.5,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "2026 Abgaben",
+      "tariffType": "regional_fees",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "alle",
+      "prices": {
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4045,
+            "municipalityName": "Wettingen",
+            "municipalityBase": {
+              "price": 0,
+              "priceUnit": "CHF/M"
+            },
+            "municipalityEnergy": [
+              {
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0085,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessionsabgabe"
+          },
+          {
+            "municipalityNumber": 4045,
+            "municipalityName": "Wettingen",
+            "municipalityBase": {
+              "price": 0,
+              "priceUnit": "CHF/M"
+            },
+            "municipalityEnergy": [
+              {
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.004,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Förderabgabe Energie"
+          }
+        ]
+      }
+    },
+    {
+      "tariffName": "2026 Business Energie \"wasserstrom\"",
+      "tariffType": "electricity",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Gewerbekunden, Niederspannung mit einem Jahresverbrauch grösser als 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.103,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "2026 Business Netznutzung",
+      "tariffType": "grid",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Gewerbekunden, Niederspannung mit einem Jahresverbrauch grösser als 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 65,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.057,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 9.5,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.038,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        }
+      }
+    },
+    {
+      "tariffName": "2026 Business Messtarif",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Gewerbekunden, Niederspannung mit einem Jahresverbrauch grösser als 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 50,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "2026 Industry Energie \"wasserstrom\"",
+      "tariffType": "electricity",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Industriekunden, Mittelspannung",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.103,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "customerVoltageLevel": 5,
+      "tariffName": "2026 Industry Netznutzung",
+      "tariffType": "grid",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Industriekunden, Mittelspannung",
+      "prices": {
+        "base": {
+          "price": 75,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.041,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 8.4,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.038,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        }
+      }
+    },
+    {
+      "tariffName": "2026 Industry Messtarif",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "comment": "",
+      "customerType": "Strom für Industriekunden, Mittelspannung",
+      "prices": {
+        "base": {
+          "price": 50,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "2027 Basic Energie \"wasserstrom\"",
+      "tariffType": "electricity",
+      "standardBasegroup": true,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Privat- und Gewerbekunden, Niederspannung mit einem Jahresverbrauch bis 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.088,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "2027 Basic Netznutzung",
+      "tariffType": "grid",
+      "standardBasegroup": true,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Privat- und Gewerbekunden, Niederspannung mit einem Jahresverbrauch bis 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 7.2,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.095,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.038,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0.095,
+          "priceUnit": "CHF/kWh"
+        }
+      }
+    },
+    {
+      "tariffName": "2027 Basic Messtarif",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Privat- und Gewerbekunden, Niederspannung mit einem Jahresverbrauch bis 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 5,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "2027 Abgaben",
+      "tariffType": "regional_fees",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "alle",
+      "prices": {
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4045,
+            "municipalityName": "Wettingen",
+            "municipalityBase": {
+              "price": 0,
+              "priceUnit": "CHF/M"
+            },
+            "municipalityEnergy": [
+              {
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0085,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Konzessionsabgabe"
+          },
+          {
+            "municipalityNumber": 4045,
+            "municipalityName": "Wettingen",
+            "municipalityBase": {
+              "price": 0,
+              "priceUnit": "CHF/M"
+            },
+            "municipalityEnergy": [
+              {
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.004,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Förderabgabe Energie"
+          }
+        ]
+      }
+    },
+    {
+      "tariffName": "2027 Business Energie \"wasserstrom\"",
+      "tariffType": "electricity",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Gewerbekunden, Niederspannung mit einem Jahresverbrauch grösser als 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.088,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "2027 Business Netznutzung",
+      "tariffType": "grid",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Gewerbekunden, Niederspannung mit einem Jahresverbrauch grösser als 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 65,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.064,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 9.9,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.038,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0.064,
+          "priceUnit": "CHF/kWh"
+        }
+      }
+    },
+    {
+      "tariffName": "2027 Business Messtarif",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Gewerbekunden, Niederspannung mit einem Jahresverbrauch grösser als 50'000 kWh",
+      "prices": {
+        "base": {
+          "price": 14,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "2027 Industry Energie \"wasserstrom\"",
+      "tariffType": "electricity",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Industriekunden, Mittelspannung",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.088,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "customerVoltageLevel": 5,
+      "tariffName": "2027 Industry Netznutzung",
+      "tariffType": "grid",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Industriekunden, Mittelspannung",
+      "prices": {
+        "base": {
+          "price": 75,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.041,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 9.2,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [
+          {
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.038,
+            "priceUnit": "CHF/kVarh"
+          }
+        ],
+        "refundStorage": {
+          "price": 0.041,
+          "priceUnit": "CHF/kWh"
+        }
+      }
+    },
+    {
+      "tariffName": "2027 Industry Messtarif",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2027-01-01",
+      "endDate": "2027-12-31",
+      "comment": "",
+      "customerType": "Strom für Industriekunden, Mittelspannung",
+      "prices": {
+        "base": {
+          "price": 14,
+          "priceUnit": "CHF/M"
+        }
+      }
+    }
+  ]
+}

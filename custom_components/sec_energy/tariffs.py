@@ -72,7 +72,7 @@ def _boundary_date(value, default):
     try:
         return date.fromisoformat(value)
     except ValueError:
-        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T00:00:00(?:\.0{1,6})?", value):
+        if not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T00:00:00(?:\.0{1,6})?", value):
             raise ValueError("Expected date or naive midnight datetime") from None
         parsed = datetime.fromisoformat(value)
         if parsed.time() != time.min:
