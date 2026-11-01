@@ -1,0 +1,295 @@
+{
+  "dsoName": "Technische_Werke_der_Gemeinde_Birwinken",
+  "dsoNumber": 10455012345,
+  "tariffs": [
+    {
+      "tariffName": "Haushalt <100 MWh/a 2026 (electricity)",
+      "tariffType": "electricity",
+      "standardBasegroup": true,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Haushalt <100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Energie 14.10 + EE-Aufwertung 1.10 Rp/kWh (Basisangebot). Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "energy": [
+          {
+            "months": [],
+            "weekdays": [],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.152,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "tariffName": "Haushalt <100 MWh/a 2026 (grid)",
+      "tariffType": "grid",
+      "standardBasegroup": true,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Haushalt <100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Netznutzung 7.40 + SDL 0.27 + solidarisierte Kosten 0.05 + Stromreserve 0.41 + Netzzuschlag KEV 2.30 Rp/kWh; Grundgebühr 10.50 CHF/Monat. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "base": {
+          "price": 10.5,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [],
+            "weekdays": [],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1043,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      },
+      "customerVoltageLevel": 7
+    },
+    {
+      "tariffName": "Haushalt <100 MWh/a 2026 (metering)",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Haushalt <100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Messtarif 4.50 CHF je Monat. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "base": {
+          "price": 4.5,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "Haushalt <100 MWh/a 2026 (regional_fees)",
+      "tariffType": "regional_fees",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Haushalt <100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Abgabe an Gemeindewesen 0.10 Rp/kWh; nicht in grid.energy enthalten. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4901,
+            "municipalityName": "Birwinken",
+            "municipalityEnergy": [
+              {
+                "months": [],
+                "weekdays": [],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.001,
+                "priceUnit": "CHF/kWh"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "tariffName": "Industrie >100 MWh/a 2026 (electricity)",
+      "tariffType": "electricity",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Industrie >100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Energie 13.50 + EE-Aufwertung 1.10 Rp/kWh (Basisangebot). Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "energy": [
+          {
+            "months": [],
+            "weekdays": [],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.146,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "tariffName": "Industrie >100 MWh/a 2026 (grid)",
+      "tariffType": "grid",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Industrie >100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Netznutzung 3.50 + SDL 0.27 + solidarisierte Kosten 0.05 + Stromreserve 0.41 + Netzzuschlag KEV 2.30 Rp/kWh; Grundgebühr 10.50 CHF/Monat. Leistung 10.00 CHF/kW/Monat. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "base": {
+          "price": 10.5,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [],
+            "weekdays": [],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0653,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "months": [],
+            "weekdays": [],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 10.0,
+            "priceUnit": "CHF/kW/M"
+          }
+        ]
+      },
+      "customerVoltageLevel": 7
+    },
+    {
+      "tariffName": "Industrie >100 MWh/a 2026 (metering)",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Industrie >100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Messtarif 4.50 CHF je Monat. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "base": {
+          "price": 4.5,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "Industrie >100 MWh/a 2026 (regional_fees)",
+      "tariffType": "regional_fees",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Industrie >100 MWh/a",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Abgabe an Gemeindewesen 0.10 Rp/kWh; nicht in grid.energy enthalten. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4901,
+            "municipalityName": "Birwinken",
+            "municipalityEnergy": [
+              {
+                "months": [],
+                "weekdays": [],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.001,
+                "priceUnit": "CHF/kWh"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "tariffName": "Baustrom 2026 (electricity)",
+      "tariffType": "electricity",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Baustrom",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Energie 14.90 + EE-Aufwertung 1.10 Rp/kWh (Basisangebot). Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "energy": [
+          {
+            "months": [],
+            "weekdays": [],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.16,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      }
+    },
+    {
+      "tariffName": "Baustrom 2026 (grid)",
+      "tariffType": "grid",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Baustrom",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Netznutzung 21.50 + SDL 0.27 + solidarisierte Kosten 0.05 + Stromreserve 0.41 + Netzzuschlag KEV 2.30 Rp/kWh; Grundgebühr 0.00 CHF/Monat. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "base": {
+          "price": 0.0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "months": [],
+            "weekdays": [],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.2453,
+            "priceUnit": "CHF/kWh"
+          }
+        ]
+      },
+      "customerVoltageLevel": 7
+    },
+    {
+      "tariffName": "Baustrom 2026 (metering)",
+      "tariffType": "metering",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Baustrom",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Messtarif 0.00 CHF je Monat. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "base": {
+          "price": 0.0,
+          "priceUnit": "CHF/M"
+        }
+      }
+    },
+    {
+      "tariffName": "Baustrom 2026 (regional_fees)",
+      "tariffType": "regional_fees",
+      "standardBasegroup": false,
+      "tariffForm": "constant",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "customerType": "Baustrom",
+      "comment": "Abgeleitete Rekonstruktion, kein offizieller JSON-Feed. Quelle: https://www.birwinken.ch/public/upload/assets/2240/Tarifblatt_2026_v2_neu.pdf?fp=1, Seite 1. Alle Preise exkl. MWST. Abgabe an Gemeindewesen 0.10 Rp/kWh; nicht in grid.energy enthalten. Keine HT/NT-Zeiten im Bezugstarif angegeben.",
+      "prices": {
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4901,
+            "municipalityName": "Birwinken",
+            "municipalityEnergy": [
+              {
+                "months": [],
+                "weekdays": [],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.001,
+                "priceUnit": "CHF/kWh"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
