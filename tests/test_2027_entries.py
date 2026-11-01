@@ -59,15 +59,18 @@ class Test2027Entries(unittest.TestCase):
             "https://www.tbwaengi.ch/userdata/dateien/json_dateien/"
             "preise-2027-tbwaengi-maschinenlesbar.json")
 
-    def test_no_third_party_2027_urls(self):
-        """Muhen, Würenlingen, Gossau etc. must stay out pending decision."""
+    def test_no_unapproved_third_party_urls(self):
+        """Only approved exact third-party URLs remain in the catalog."""
+        approved = {
+            "Elektra Sins": "https://strompreisvergleich.ch/tarife/data/10346012345/tarife.json",
+            "Energie Gossau AG": "https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json",
+        }
         for key, source in CATALOG.items():
             urls = source.values() if isinstance(source, dict) else [source]
             for url in urls:
-                if key == 'Energie Gossau AG' and url == 'https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json':
-                    continue  # Source approved in merged PR #7; no blanket exemption.
-                self.assertNotRegex(url, re.compile(r"strompreisvergleich|youtility"),
-                                    f"{key}: third-party URL leaked into catalog")
+                if re.search(r"strompreisvergleich|youtility", url):
+                    self.assertEqual(approved.get(key), url,
+                                     f"{key}: unapproved third-party URL leaked into catalog")
 
 
 if __name__ == "__main__":
