@@ -55,4 +55,9 @@ SHA256 JSON: `ecbd523cc6dd8d48f7ce5c445207b37815b6462255896e80c166cdaaf231cf98`.
 
 Dies sind Daten, keine vollständige Gesamtpreis-Sensorunterstützung: Die Integration wählt einen Tarif, paart nicht automatisch alle vier Tarifarten und addiert Gemeinde-/Leistungsgebühren nicht automatisch zu einem vollständigen Bezugsgesamtpreis. Die hier geprüften PDF-Totale sind Datenprüfungen, keine Zusage einer entsprechenden Sensoranzeige. MWST muss gegebenenfalls genau einmal in der Darstellung berücksichtigt werden.
 
-Kein Hosting oder Katalogwechsel in diesem PR. Die geplante Pages-URL ist vor Deployment **nicht live verifiziert**. Nach Merge folgen Hosting und ausschließlich der 2026-Jahreseintrag in t_1f1cc54a; der 2027-Pfad bleibt erhalten. Kein Merge oder Release ist durch diesen Daten-PR autorisiert. v1.1.1 setzt beide tatsächlichen Merges und verifiziertes Live-Hosting voraus.
+Die Jahres-Map im Katalog führt Birwinken unter „Technische Werke der Gemeinde Birwinken“:
+
+- **2026:** https://marcelloceschia.github.io/ha-ch-energy/tariffs/birwinken/2026_tariffs.json – geprüfte PDF-Rekonstruktion, kein offizieller Betreiber-JSON-Feed. Das Live-JSON wurde per HTTP 200 und obigem SHA256 gegen das unveränderte Artefakt geprüft.
+- **2027:** https://www.birwinken.ch/public/upload/assets/2496/Tarife%202027_maschinenlesbar.json?fp=2 – offizieller Betreiber-Feed, unverändert als eigenständige Jahresquelle.
+
+`tests/test_birwinken_catalogue.py` prüft die tatsächliche Katalog-Map, Setup-Verfügbarkeit und URL-Auflösung beider Jahre an den Jahresgrenzen sowie die Ablehnung eines ausschließlich 2026 gültigen Tarifs im Jahr 2027. Hosting und Tarifdateien werden durch die Katalogzuordnung nicht verändert. Merge und Release bleiben getrennte Freigaben; v1.1.1 setzt den tatsächlichen Katalog-Merge voraus.
