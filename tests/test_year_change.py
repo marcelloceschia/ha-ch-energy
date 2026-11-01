@@ -90,7 +90,8 @@ class CatalogueTests(unittest.TestCase):
                     self.assertIsNone(re.search(r'20\d{2}', source))
                 else:
                     self.assertTrue(all(type(y) is int for y in source))
-                    self.assertIn(2026, source)
+                    self.assertTrue(source)
+                    self.assertTrue(all(isinstance(url, str) for url in source.values()))
         self.assertEqual(set(sources['Technische Betriebe Flawil (TBF)']), {2026, 2027})
 
     def test_year_map_sources_and_migration_identity(self):

@@ -174,15 +174,15 @@ PREDEFINED_DSOS = {
     "Elektrizitätsversorgung Villigen (EVV)": {2026: "https://25304444.fs1.hubspotusercontent-eu1.net/hubfs/25304444/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250827_evvilligen_strompreise_2026.json", 2027: "https://www.ibbrugg.ch/hubfs/IBB%20Webseite/Dokumente/Preisblaetter/2027/20260824_evvilligen_strompreise_2027.json"},
     "Elektrizitätsversorgung Zeihen (EVZ)": {2026: "https://energieverbrauch.ch/download/Tarife/Tarife_Elektrizit%C3%A4tsversorgung-Zeihen_2026.json"},
     "Elektrizitätswerk Jona-Rapperswil AG": {2026: "https://ewjr.ch/images/json/20250825_tariffs_EWJR.json"},
-    "Elektrizitätswerk Muhen": {2026: "https://www.muhen.ch/public/upload/assets/3522/Tarife_Elektrizit%C3%A4tswerk-Muhen_2026.json"},
+    "Elektrizitätswerk Muhen": {2026: "https://www.muhen.ch/public/upload/assets/3522/Tarife%20Elektrizit%C3%A4tswerk%20Muhen.json"},
     "Elektrizitätswerk Rümlang Genossenschaft": {2026: "https://www.ewruemlang.ch/uploads/files/Dokumente/ELCOM_Upload/2026-Maschinenlesbare-EWR-Tarife.json"},
     "Elektrizitätswerk Sennwald": {2026: "https://www.ewsennwald.ch/fileadmin/user_upload/EW_Sennwald_Tarife_2026.json"},
-    "Energie Gossau AG": {2026: "https://energiegossau.ch/site/assets/files/1029/tarife_energie_gossau_ag_2026.json"},
+    "Energie Gossau AG": {2026: "https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json", 2027: "https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json"},
     "Energie Grüningen AG": {2026: "https://energie-grueningen.ch/neu/wp-content/uploads/2025/08/Tarife_Energie_Grueningen_AG_2026.json"},
     "Energie Kreuzlingen": {2026: "https://energiekreuzlingen.ch/maschinenlesbar_mitteilung_tarifaenderungen_2026_energie_kreuzlingen.json"},
     "Energie Münchenbuchsee AG": {2026: "https://www.energiebuchsi.ch/de/angebot/strom/20250811-tariffs.json", 2027: "https://www.energiebuchsi.ch/de/angebot/strom/20260824-tariffs-2027.json"},
     "Energie Thun AG": {2026: "https://energiethun.ch/app/uploads/2025/08/Tarife-Energie-Thun-AG-2026.json"},
-    "Energie Wettingen AG": {2026: "https://www.energiewettingen.ch/api/rm/82F24B75YCP3U59/20250814-enw-2026-tariffs.json", 2027: "https://www.energiewettingen.ch/upload/rm/20/26/20260824-enw-2027-tariffs-1.json"},
+    "Energie Wettingen AG": {2026: "https://www.energiewettingen.ch/upload/rm/20/26/20260824-enw-2027-tariffs-1.json", 2027: "https://www.energiewettingen.ch/upload/rm/20/26/20260824-enw-2027-tariffs-1.json"},
     "Eniwa AG": {2026: "https://cms.eniwa.ch/assets/files/Downloads/Sonstiges/2026_Eniwa_tariffs.json", 2027: "https://cms.eniwa.ch/assets/files/Downloads/Sonstiges/eniwa_maschinenlesbare_stromtarife_2026_2027.json"},
     "Gemeinde Würenlingen Technische Werke": {2026: "https://www.wuerenlingen.ch/fileadmin/Tarife_Gemeinde_Wuerenlingen_Technische_Werke_2026.json"},
     "Gemeindewerke Erstfeld": {2026: "https://www.gemeindewerke-erstfeld.ch/wp-content/uploads/2025/08/2026-Stromtarife-GWE-MRD.json", 2027: "https://www.gemeindewerke-erstfeld.ch/wp-content/uploads/2026/08/Tarifsammlung-Gemeindewerke-Erstfeld.json"},
@@ -199,7 +199,7 @@ PREDEFINED_DSOS = {
     "IB Wohlen AG": {2026: "https://www.ibw.ag/mm/Tarife_IB_Wohlen_AG_2026.json"},
     "IBB Strom AG": {2026: "https://www.ibbrugg.ch/hubfs/IBB%20Webseite/Dokumente/Preisblaetter/2026/20250917_ibb_strompreise_2026.json", 2027: "https://www.ibbrugg.ch/hubfs/IBB%20Webseite/Dokumente/Preisblaetter/2027/20260824_ibb_strompreise_2027.json"},
     "IWB": "https://www.iwb.ch/dam/jcr:4c273699-fbe7-4e2e-bdb4-cf908631dd1c/maschinell-lesbare-tarife-strom.json",
-    "Industrielle Betriebe Interlaken AG": {2026: "https://www.ibi.ch/download/documents/2e/f3c23qsicm3k9idz2arnv0qoxxew05/20250825_tariffs.json"},
+    "Industrielle Betriebe Interlaken AG": {2027: "https://www.ibi.ch/media/documents/20260821_tariffs.json"},
     "Infrastruktur Zürichsee AG": {2026: "https://www.infra-z.ch/images/downloads/Tarife_Strom_maschinenlesbares_Format_2026.json", 2027: "https://www.infra-z.ch/images/downloads/Tarife_Strom_maschinenlesbares_Format_2027.json"},
     "Localnet AG": "https://www.localnet.ch/fileadmin/user_upload/Strom/Formulare_und_PDF/Maschinenlesbare_Information.json",
     "OIKEN SA": {2026: "https://oiken.ch/tarifs/tariffs_OIKEN_2026.json", 2027: "https://oiken.ch/tarifs/Tarifs_OIKEN_2027.json"},
@@ -246,6 +246,12 @@ class SECEnergyOptionsFlow(config_entries.OptionsFlow):
             })
         )
 
+def available_dsos(sources, day):
+    """Only offer explicit current-year maps; never guess a setup source."""
+    return {name: source for name, source in sources.items()
+            if not isinstance(source, dict) or day.year in source}
+
+
 @config_entries.HANDLERS.register(DOMAIN)
 class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 2
@@ -258,10 +264,14 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input=None):
         """Erster Schritt: DSO (Stromversorger) auswählen"""
         errors = {}
+        choices = available_dsos(PREDEFINED_DSOS, dt_util.now().date())
         
         if user_input is not None:
             dso_selection = user_input.get("dso")
             
+            if dso_selection not in choices:
+                return self.async_abort(reason="no_tariffs")
+
             if dso_selection == "Custom / Other":
                 # Benutzer will eigene URL eingeben
                 return await self.async_step_custom_url()
@@ -274,7 +284,7 @@ class SECEnergyConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema({
-                vol.Required("dso", default="Stadtwerke Wetzikon"): vol.In(list(PREDEFINED_DSOS.keys())),
+                vol.Required("dso", default="Stadtwerke Wetzikon"): vol.In(list(choices)),
             }),
             errors=errors,
             description_placeholders={

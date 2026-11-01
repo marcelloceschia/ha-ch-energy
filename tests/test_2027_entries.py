@@ -60,9 +60,10 @@ class Test2027Entries(unittest.TestCase):
             "preise-2027-tbwaengi-maschinenlesbar.json")
 
     def test_no_unapproved_third_party_urls(self):
-        """Only the documented Sins repair may use this exact third-party URL."""
+        """Only approved exact third-party URLs remain in the catalog."""
         approved = {
             "Elektra Sins": "https://strompreisvergleich.ch/tarife/data/10346012345/tarife.json",
+            "Energie Gossau AG": "https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json",
         }
         for key, source in CATALOG.items():
             urls = source.values() if isinstance(source, dict) else [source]

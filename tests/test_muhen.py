@@ -8,7 +8,7 @@ from test_validate_schema import CONFIG_FLOW, FIXTURES, REPO_ROOT, validate_sche
 
 MUHEN_URL = (
     "https://www.muhen.ch/public/upload/assets/3522/"
-    "Tarife_Elektrizit%C3%A4tswerk-Muhen_2026.json"
+    "Tarife%20Elektrizit%C3%A4tswerk%20Muhen.json"
 )
 
 
