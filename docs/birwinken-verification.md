@@ -29,7 +29,7 @@ Fixture: unmodified operator response archived from upstream PM attachment; offi
 
 These are selected component prices, NOT a complete electricity bill. Existing current/forecast sensors read the selected tariff's energy only. Base sensor reads selected prices.base separately (tested). The three N tariffs additionally contain municipalityEnergy 0.001 CHF/kWh for BFS 4901, not included in current-price sensor. Industrie NS (N) has power 10 CHF/kW/month, not represented by a dedicated sensor. Reactive power and cantonal tax arrays are empty; refundStorage is zero. Data is preserved, not double-counted or automatically combined across E/N tariffs.
 
-Full support needs a separate product decision: explicit E/N pairing, municipality selection/tax inclusion, demand measurement for kW/month, and clear total/component sensor semantics. This PR deliberately does not invent those decisions or claim total-price support. Separate 2026 tariff/hosting pipeline remains untouched (t_e8d3c3cd).
+Full support needs a separate product decision: explicit E/N pairing, municipality selection/tax inclusion, demand measurement for kW/month, and clear total/component sensor semantics. This PR deliberately does not invent those decisions or claim total-price support. Separate 2026 tariff/hosting pipeline remains untouched.
 
 ## Outstanding acceptance blocker
 
