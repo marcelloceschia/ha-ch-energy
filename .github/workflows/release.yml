@@ -1,22 +1,128 @@
-name: Release
+name: Prepare release
+run-name: Prepare ${{ inputs.tag }} at ${{ inputs.commit_sha }}
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Manifest version: X.Y.Z or X.Y.Z-beta.N'
+        required: true
+        type: string
+      tag:
+        description: 'Existing, separately approved tag: vX.Y.Z or vX.Y.Z-beta.N'
+        required: true
+        type: string
+      commit_sha:
+        description: 'Reviewed full 40-character commit SHA (not a branch)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.tag }}
+  cancel-in-progress: false
 
 jobs:
-  release:
+  validate:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    outputs:
+      prerelease: ${{ steps.metadata.outputs.prerelease }}
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout trusted validation code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+          persist-credentials: false
+      - name: Validate inputs before fetching candidate
+        env:
+          VERSION: ${{ inputs.version }}
+          TAG: ${{ inputs.tag }}
+          COMMIT_SHA: ${{ inputs.commit_sha }}
+        run: |
+          # Use the same validator, without executing any candidate code.
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path('requested-manifest.json').write_text(json.dumps({'version': os.environ['VERSION']}))
+          PY
+          python3 scripts/validate_release.py --version "$VERSION" --tag "$TAG" \
+            --sha "$COMMIT_SHA" --manifest requested-manifest.json
+      - name: Fail closed unless manual approval is configured
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/environments/release" > "$RUNNER_TEMP/environment.json"
+          jq -e '
+            .can_admins_bypass == false and
+            any(.protection_rules[]?;
+              .type == "required_reviewers" and .prevent_self_review == true and
+              any(.reviewers[]?; .type == "User" and .reviewer.login == "marcelloceschia"))
+          ' "$RUNNER_TEMP/environment.json"
+      - name: Checkout reviewed candidate as data only
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.commit_sha }}
+          path: candidate
+          persist-credentials: false
+      - name: Verify manifest and existing tag
+        id: metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          TAG: ${{ inputs.tag }}
+          COMMIT_SHA: ${{ inputs.commit_sha }}
+        run: |
+          python3 scripts/validate_release.py --version "$VERSION" --tag "$TAG" \
+            --sha "$COMMIT_SHA" --manifest candidate/custom_components/sec_energy/manifest.json > release-metadata.json
+          test "$(git -C candidate rev-parse HEAD)" = "$COMMIT_SHA"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/commits/refs/tags/$TAG" --jq .sha)" = "$COMMIT_SHA"
+          echo "prerelease=$(jq -r .prerelease release-metadata.json)" >> "$GITHUB_OUTPUT"
+          git -C candidate archive --format=zip --output="$GITHUB_WORKSPACE/release-candidate.zip" HEAD custom_components/sec_energy hacs.json
+          sha256sum release-candidate.zip > release-candidate.sha256
+          {
+            echo '### Release candidate (not published)'
+            echo "Version: $VERSION; tag: $TAG; commit: $COMMIT_SHA"
+            echo "Prerelease: $(jq -r .prerelease release-metadata.json)"
+            echo 'Review the candidate artifact before approving the release environment.'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Store candidate for manual review (not a HACS release asset)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: release-candidate
+          path: |
+            release-metadata.json
+            release-candidate.zip
+            release-candidate.sha256
+          if-no-files-found: error
+          retention-days: 14
+
+  prepare-draft:
+    needs: validate
+    runs-on: ubuntu-latest
+    # Configure required reviewer marcelloceschia, prevent self-review and
+    # disable admin bypass. Validation fails closed if these rules are absent.
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - name: Create draft only after approval; never publish or create tags
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          TAG: ${{ inputs.tag }}
+          COMMIT_SHA: ${{ inputs.commit_sha }}
+          PRERELEASE: ${{ needs.validate.outputs.prerelease }}
+        run: |
+          test "$(gh api "repos/$GITHUB_REPOSITORY/commits/refs/tags/$TAG" --jq .sha)" = "$COMMIT_SHA"
+          # Refuse to update/overwrite an existing release, including a draft.
+          gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" > "$RUNNER_TEMP/releases.json"
+          jq -s -e --arg tag "$TAG" 'add | all(.[]; .tag_name != $tag)' "$RUNNER_TEMP/releases.json"
+          flags=()
+          if [ "$PRERELEASE" = true ]; then flags+=(--prerelease); fi
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag \
+            --target "$COMMIT_SHA" --title "Release $VERSION" --draft --latest=false \
+            --notes "Candidate $COMMIT_SHA. Publication requires separate Marcello approval. Review validation runs and the release-candidate artifact before publishing." \
+            "${flags[@]}"
+          echo 'Draft created. No tag created, no assets published, no release published.' >> "$GITHUB_STEP_SUMMARY"
