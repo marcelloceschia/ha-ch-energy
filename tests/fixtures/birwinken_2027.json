@@ -1,0 +1,559 @@
+{
+  "dsoName": "Technische_Werke_der_Gemeinde_Birwinken",
+  "dsoNumber": "10455012345",
+  "tariffs": [
+    {
+      "customerVoltageLevel": 0,
+      "tariffName": "Haushalt (E)",
+      "tariffType": "electricity",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01T00:00:00",
+      "endDate": "2027-12-31T00:00:00",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "06:00",
+            "to": "13:00",
+            "price": 0.1410000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "06:00",
+            "to": "20:00",
+            "price": 0.1410000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1410000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "13:00",
+            "to": "06:00",
+            "price": 0.1410000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "20:00",
+            "to": "06:00",
+            "price": 0.1410000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Haushalt (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01T00:00:00",
+      "endDate": "2027-12-31T00:00:00",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 10.5000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "06:00",
+            "to": "13:00",
+            "price": 0.0925000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "06:00",
+            "to": "20:00",
+            "price": 0.0925000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0925000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "13:00",
+            "to": "06:00",
+            "price": 0.0925000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "20:00",
+            "to": "06:00",
+            "price": 0.0925000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4901,
+            "municipalityName": "Birwinken",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0010000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Abgaben Gemeinwesen"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 0,
+      "tariffName": "Industrie NS (E)",
+      "tariffType": "electricity",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01T00:00:00",
+      "endDate": "2027-12-31T00:00:00",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "06:00",
+            "to": "13:00",
+            "price": 0.1350000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "06:00",
+            "to": "20:00",
+            "price": 0.1350000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1350000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "13:00",
+            "to": "06:00",
+            "price": 0.1350000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "20:00",
+            "to": "06:00",
+            "price": 0.1350000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Industrie NS (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01T00:00:00",
+      "endDate": "2027-12-31T00:00:00",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 10.5000000000,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "06:00",
+            "to": "13:00",
+            "price": 0.0535000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "06:00",
+            "to": "20:00",
+            "price": 0.0535000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.0535000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "13:00",
+            "to": "06:00",
+            "price": 0.0535000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "20:00",
+            "to": "06:00",
+            "price": 0.0535000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr",
+              "Sa",
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 10.0000000000,
+            "priceUnit": "CHF/kW/M"
+          }
+        ],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4901,
+            "municipalityName": "Birwinken",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0010000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Abgaben Gemeinwesen"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 7,
+      "tariffName": "Baustrom (N)",
+      "tariffType": "grid",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01T00:00:00",
+      "endDate": "2027-12-31T00:00:00",
+      "customerType": "Klein",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "06:00",
+            "to": "13:00",
+            "price": 0.2335000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "06:00",
+            "to": "20:00",
+            "price": 0.2335000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.2335000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "13:00",
+            "to": "06:00",
+            "price": 0.2335000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "20:00",
+            "to": "06:00",
+            "price": 0.2335000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [
+          {
+            "municipalityNumber": 4901,
+            "municipalityName": "Birwinken",
+            "municipalityEnergy": [
+              {
+                "weekdays": [
+                  "Mo",
+                  "Tu",
+                  "We",
+                  "Th",
+                  "Fr",
+                  "Sa",
+                  "Su"
+                ],
+                "from": "00:00",
+                "to": "00:00",
+                "price": 0.0010000000,
+                "priceUnit": "CHF/kWh"
+              }
+            ],
+            "municipalityComment": "Abgaben Gemeinwesen"
+          }
+        ],
+        "cantonalTaxes": []
+      }
+    },
+    {
+      "customerVoltageLevel": 0,
+      "tariffName": "Baustrom (E)",
+      "tariffType": "electricity",
+      "tariffForm": "multilevel",
+      "startDate": "2027-01-01T00:00:00",
+      "endDate": "2027-12-31T00:00:00",
+      "customerType": "Gross",
+      "prices": {
+        "base": {
+          "price": 0,
+          "priceUnit": "CHF/M"
+        },
+        "energy": [
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "06:00",
+            "to": "13:00",
+            "price": 0.1490000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "06:00",
+            "to": "20:00",
+            "price": 0.1490000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Su"
+            ],
+            "from": "00:00",
+            "to": "00:00",
+            "price": 0.1490000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Sa"
+            ],
+            "from": "13:00",
+            "to": "06:00",
+            "price": 0.1490000000,
+            "priceUnit": "CHF/kWh"
+          },
+          {
+            "weekdays": [
+              "Mo",
+              "Tu",
+              "We",
+              "Th",
+              "Fr"
+            ],
+            "from": "20:00",
+            "to": "06:00",
+            "price": 0.1490000000,
+            "priceUnit": "CHF/kWh"
+          }
+        ],
+        "power": [],
+        "reactivePower": [],
+        "refundStorage": {
+          "price": 0,
+          "priceUnit": "CHF/kWh"
+        },
+        "municipalityTaxes": [],
+        "cantonalTaxes": []
+      }
+    }
+  ]
+}

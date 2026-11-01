@@ -631,9 +631,9 @@ def get_current_price(tariff, dt):
     energy_tiers = prices.get("energy", [])
     
     for tier in energy_tiers:
-        if month not in tier.get("months", []):
+        if tier.get("months") and month not in tier["months"]:
             continue
-        if weekday not in tier.get("weekdays", []):
+        if tier.get("weekdays") and weekday not in tier["weekdays"]:
             continue
         if time_in_range(tier["from"], tier["to"], dt):
             return tier["price"]
@@ -677,9 +677,9 @@ def get_next_tariff_change(tariff, now):
     # Collect all time boundaries (from and to) for tiers that apply today
     boundaries = set()
     for tier in energy_tiers:
-        if month not in tier.get("months", []):
+        if tier.get("months") and month not in tier["months"]:
             continue
-        if weekday not in tier.get("weekdays", []):
+        if tier.get("weekdays") and weekday not in tier["weekdays"]:
             continue
         boundaries.add(tier["from"])
         boundaries.add(tier["to"])
