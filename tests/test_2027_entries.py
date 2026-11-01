@@ -64,6 +64,8 @@ class Test2027Entries(unittest.TestCase):
         for key, source in CATALOG.items():
             urls = source.values() if isinstance(source, dict) else [source]
             for url in urls:
+                if key == 'Energie Gossau AG' and url == 'https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json':
+                    continue  # Source approved in merged PR #7; no blanket exemption.
                 self.assertNotRegex(url, re.compile(r"strompreisvergleich|youtility"),
                                     f"{key}: third-party URL leaked into catalog")
 

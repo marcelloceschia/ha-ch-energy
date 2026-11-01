@@ -16,6 +16,8 @@ class Flow:
         return kwargs
     def async_show_form(self, **kwargs):
         return kwargs
+    def async_abort(self, **kwargs):
+        return {'abort': kwargs}
 
 
 class FlowTests(unittest.IsolatedAsyncioTestCase):
@@ -37,8 +39,18 @@ class FlowTests(unittest.IsolatedAsyncioTestCase):
                        fetch_document=AsyncMock(return_value={'dsoName':'DSO', 'dsoNumber':1, 'tariffs':[tariff(2026)]}),
                        _LOGGER=SimpleNamespace(debug=lambda *args: None, warning=lambda *args: None, error=lambda *args, **kwargs: None),
                        json=__import__('json'), aiohttp=SimpleNamespace(ClientError=OSError))
-        exec(compile(ast.fix_missing_locations(ast.Module(body=[cls], type_ignores=[])), str(path), 'exec'), self.ns)
+        exec(compile(ast.fix_missing_locations(ast.Module(body=[next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'available_dsos'), cls], type_ignores=[])), str(path), 'exec'), self.ns)
         self.flow = self.ns['SECEnergyConfigFlow']()
+
+    async def test_dropdown_changes_at_local_new_year_and_rejects_stale_selection(self):
+        self.ns['PREDEFINED_DSOS']['Future'] = {2027: 'https://test/2027.json'}
+        result = await self.flow.async_step_user()
+        self.assertEqual(next(iter(result['data_schema'].values())), ['DSO'])
+        self.assertEqual(await self.flow.async_step_user({'dso': 'Future'}),
+                         {'abort': {'reason': 'no_tariffs'}})
+        self.ns['dt_util'].now = lambda: datetime(2027, 1, 1)
+        result = await self.flow.async_step_user()
+        self.assertEqual(next(iter(result['data_schema'].values())), ['Future'])
 
     async def test_new_entry_persists_key_and_resolved_string_not_year_map(self):
         await self.flow.async_step_user({'dso': 'DSO'})
