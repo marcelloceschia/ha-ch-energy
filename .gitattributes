@@ -1,0 +1,2 @@
+# Preserve the published Sins fixture byte-for-byte, including CRLF.
+tests/fixtures/sins_2026_2027.json -text whitespace=cr-at-eol
