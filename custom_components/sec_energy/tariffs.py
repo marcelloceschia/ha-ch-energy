@@ -58,11 +58,22 @@ async def resolve_document(source, day, fetch, validate, name=None):
     raise ValueError('No valid tariff source available')
 
 
+def _boundary_date(value):
+    """Accept dates and Muhen's exact local-midnight boundary form only.
+
+    Midnight encodes an inclusive calendar date, not a UTC instant. Do not
+    truncate arbitrary timestamps, timezone offsets or trailing garbage.
+    """
+    if isinstance(value, str) and len(value) == 19 and value.endswith('T00:00:00'):
+        value = value[:10]
+    return date.fromisoformat(value)
+
+
 def covers(tariff, day):
     """Missing boundaries are open; malformed boundaries are never current."""
     try:
-        start = date.fromisoformat(tariff["startDate"]) if tariff.get("startDate") else date.min
-        end = date.fromisoformat(tariff["endDate"]) if tariff.get("endDate") else date.max
+        start = _boundary_date(tariff["startDate"]) if tariff.get("startDate") else date.min
+        end = _boundary_date(tariff["endDate"]) if tariff.get("endDate") else date.max
         return start <= day <= end
     except (TypeError, ValueError):
         return False

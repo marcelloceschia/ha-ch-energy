@@ -108,11 +108,11 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         results = list(pool.map(check, sorted(dsos.items())))
 
+    broken = [r for r in results if not r["ok"] and not r.get("unavailable")]
     if "--json" in argv:
         print(json.dumps(results, indent=2, ensure_ascii=False))
-        return
+        sys.exit(1 if broken else 0)
 
-    broken = [r for r in results if not r["ok"] and not r.get("unavailable")]
     unavailable = [r for r in results if r.get("unavailable")]
     checked = [r for r in results if not r.get("skipped") and not r.get("unavailable")]
     if "--all" in argv:
