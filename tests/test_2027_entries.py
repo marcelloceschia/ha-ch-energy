@@ -59,11 +59,17 @@ class Test2027Entries(unittest.TestCase):
             "https://www.tbwaengi.ch/userdata/dateien/json_dateien/"
             "preise-2027-tbwaengi-maschinenlesbar.json")
 
+    def test_egai_verified_source_covers_2026_and_2027(self):
+        expected = "https://strompreisvergleich.ch/tarife/data/10212012345/tarife.json"
+        source = CATALOG["Elektra Genossenschaft Arni-Islisberg"]
+        self.assertEqual(source, {2026: expected, 2027: expected})
+
     def test_no_unapproved_third_party_urls(self):
         """Only approved exact third-party URLs remain in the catalog."""
         approved = {
             "Elektra Sins": "https://strompreisvergleich.ch/tarife/data/10346012345/tarife.json",
             "Energie Gossau AG": "https://strompreisvergleich.ch/tarife/data/10766012345/tarife.json",
+            "Elektra Genossenschaft Arni-Islisberg": "https://strompreisvergleich.ch/tarife/data/10212012345/tarife.json",
         }
         for key, source in CATALOG.items():
             urls = source.values() if isinstance(source, dict) else [source]
