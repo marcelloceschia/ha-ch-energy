@@ -150,7 +150,7 @@ PREDEFINED_DSOS = {
     "Elektra Aristau (VNB)": {2026: "https://www.elektra-aristau.ch/media/tarifs_json/Tarife_ElektraAristau_2026.json"},
     "Elektra Beinwil": {2026: "https://www.elektra-beinwil.ch/sites/default/files/Tarife_Elektra_Beinwil_2026.json"},
     "Elektra Büttikon": {2026: "https://www.buettikon.ch/sites/default/files/2025-08/Tarife_Elektra-Bu%CC%88ttikon_2026.json"},
-    "Elektra Genossenschaft Arni-Islisberg": {2026: "https://egai.ch/index_htm_files/Tarife_Elektra_Arni-Islisberg_2026.json"},
+    "Elektra Genossenschaft Arni-Islisberg": {2026: "https://strompreisvergleich.ch/tarife/data/10212012345/tarife.json", 2027: "https://strompreisvergleich.ch/tarife/data/10212012345/tarife.json"},
     "Elektra Hermetschwil-Staffeln": {2026: "https://www.elektra-hermetschwil.ch/sites/default/files/Tarife_Elektra_Hermetschwil-Staffeln_2026.json"},
     "Elektra Horn AG": {2026: "https://sec-energy.ch/tarifdaten/horn/Tarifdaten_2026_Elektra_Horn_AG.json", 2027: "https://sec-energy.ch/tarifdaten/horn/tariffs-10839012345-elektra-horn-ag-2027.json"},
     "Elektra Mettauertal und Umgebung": {2026: "https://www.emu-hottwil.ch/_docn/166696/20250827_tariffs.json", 2027: "https://www.emu-hottwil.ch/_docn/181720/20260824_tariffs.json"},
